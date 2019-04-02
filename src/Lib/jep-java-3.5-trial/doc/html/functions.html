@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Functions</title><!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1><a id="top"></a>Functions</h1>
+  
+    <ul>
+    <li><a href="#trig">Trigonometric Functions</a></li>
+    <li><a href="#logexp">Log and Exponential Functions</a></li>
+    <li><a href="#statistical">Statistical Functions</a></li>
+    <li><a href="#rounding">Rounding Functions</a></li>
+    <li><a href="#misc">Miscellaneous Functions</a></li>
+    <li><a href="#complex">Complex Functions</a></li>
+    <li><a href="#string">String Functions</a></li>
+    <li><a href="#optional">Optional Functions</a></li>
+  </ul>
+
+  <p>The following functions are included by default through the StandardFunctionTable unless otherwise noted. Functions can be included individually by calling <code>jep.addFunction(String, PostfixMathCommandI)</code>. All standard function classes are located in the <a href="../javadoc/com/singularsys/jep/functions/package-summary.html">jep.functions</a> package. The BigDecimal functions are kept separate in the <a href="../javadoc/com/singularsys/jep/bigdecimal/functions/package-summary.html">jep.bigdecimal.functions</a> package and the string manipulation functions are kept in jep.functions.strings.</p>
+  <p>Note that you can also add new <a href="customfunctions.html">custom functions</a>.</p>
+  <h2><a name="trig" id="trig"></a>Trigonometric Functions</h2>
+  <p>All functions accept arguments of the <code>Double</code> and <code>Complex</code> type, except <code>atan2</code>    which only accepts <code>Double</code> arguments.</p>
+  <table width="100%" class="clean">
+    <tr>
+      <th>Description</th>
+      <th>Function Name </th>
+      <th>Class Name </th>
+    </tr>
+    <tr> 
+      <td width="225">Sine</td>
+      <td width="150">sin(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Sine.html">Sine</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Cosine</td>
+      <td width="150">cos(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Cosine.html">Cosine</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Tangent</td>
+      <td width="150">tan(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Tangent.html">Tangent</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Arc Sine<sup>2</sup></td>
+      <td width="150">asin(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcSine.html">ArcSine</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Arc Cosine<sup>2</sup></td>
+      <td width="150">acos(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcCosine.html">ArcCosine</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Arc Tangent</td>
+      <td width="150">atan(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcTangent.html">ArcTangent</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Arc Tan with 2 parameters</td>
+      <td width="150">atan2(y, x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcTangent2.html">ArcTangent2</a></td>
+    </tr>
+    
+    <tr> 
+      <td width="225">Secant</td>
+      <td width="150">sec(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Secant.html">Secant</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Cosecant</td>
+      <td width="150">cosec(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Cosecant.html">Cosecant</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Co-tangent</td>
+      <td width="150">cot(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Cotangent.html">Cotangent</a></td>
+    </tr>
+    
+    <tr> 
+      <td width="225">Hyperbolic Sine</td>
+      <td width="150">sinh(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/SineH.html">SineH</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Hyperbolic Cosine</td>
+      <td width="150">cosh(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/CosineH.html">CosineH</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Hyperbolic Tangent</td>
+      <td width="150">tanh(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/TanH.html">TanH</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Inverse Hyperbolic Sine</td>
+      <td width="150">asinh(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcSineH.html">ArcSineH</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Inverse Hyperbolic Cosine<sup>1</sup></td>
+      <td width="150">acosh(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcCosineH.html">ArcCosineH</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Inverse Hyperbolic Tangent<sup>1</sup></td>
+      <td width="150">atanh(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ArcTanH.html">ArcTanH</a></td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="logexp" id="logexp"></a>Log and Exponential Functions</h2>
+  <p>All functions accept arguments of the Double and Complex types.</p>
+  <table width="100%" class="clean">
+    <tr>
+      <th>Description</th>
+      <th>Function Name </th>
+      <th>Class Name </th>
+    </tr>
+    <tr> 
+      <td width="225">Natural Logarithm<sup>1</sup></td>
+      <td width="150">ln(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/NaturalLogarithm.html">NaturalLogarithm</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Logarithm base 10<sup>1</sup></td>
+      <td width="150">log(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Logarithm.html">Logarithm</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Logarithm base 2<sup>1</sup></td>
+      <td width="150">lg(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/LogBase2.html">LogBase2</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Exponential (e^x)</td>
+      <td width="150">exp(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Exp.html">Exp</a></td>
+    </tr>
+    <tr>
+      <td>Power<sup>1</sup></td>
+      <td>pow(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Power.html">Power</a></td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="statistical" id="statistical"></a>Statistical Functions</h2>
+  <p>All functions accept either a vector (e.g. <code>min([1,2,3])</code>) or a set of numbers (e.g. <code>min(1,2,3)</code>).</p>
+  <table width="100%" class="clean">
+    <tr>
+      <th>Description</th>
+      <th>Function Name </th>
+      <th>Class Name </th>
+    </tr>
+    <tr> 
+      <td width="225">Average</td>
+      <td width="150">avg(x1,x2,x3,...)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Average.html">Average</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Minimum</td>
+      <td width="150">min(x1,x2,x3,...)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/MinMax.html">MinMax</a>(true)</td>
+    </tr>
+    <tr> 
+      <td width="225">Maximum</td>
+      <td width="150">max(x1,x2,x3,...)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/MinMax.html">MinMax</a>(false)</td>
+    </tr>
+    <tr>
+      <td>Vector Sum</td>
+      <td>vsum(x1,x2,x3,...)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/VSum.html">VSum</a></td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="rounding" id="rounding"></a>Rounding Functions</h2>
+    <table width="100%" class="clean">
+    <tr>
+      <th>Description</th>
+      <th>Function Name </th>
+      <th>Class Name </th>
+    </tr>
+    <tr> 
+      <td width="225">Round</td>
+      <td width="150">round(x), round(x, p) </td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Round.html">Round</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Round to integer</td>
+      <td width="150">rint(x), rint(x, p) </td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/RInt.html">RInt</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Floor</td>
+      <td width="150">floor(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Floor.html">Floor</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Ceiling</td>
+      <td width="150">ceil(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Ceil.html">Ceil</a></td>
+    </tr>
+  </table>
+    <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="misc" id="misc"></a>Miscellaneous Functions</h2>
+  <table width="100%" class="clean">
+    <tr>
+      <th width="225">Description</th>
+      <th>Function Name</th>
+      <th>Class Name</th>
+    </tr>
+    <tr> 
+      <td>If</td>
+      <td>if(cond, trueval, falseval)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/If.html">If</a></td>
+    </tr>
+    <tr>
+      <td>Str (convert number to string)</td>
+      <td>str(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Str.html">Str</a></td>
+    </tr>
+    <tr> 
+      <td>Absolute Value / Magnitude</td>
+      <td>abs(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Abs.html">Abs</a></td>
+    </tr>
+    <tr> 
+      <td>Random number<br />
+      (between 0 and 1)</td>
+      <td>rand()</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Random.html">Random</a></td>
+    </tr>
+    <tr> 
+      <td>Modulus</td>
+      <td>mod(x,y)<br />
+      = x % y</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Modulus.html">Modulus</a></td>
+    </tr>
+    <tr> 
+      <td>Square Root<sup>1</sup></td>
+      <td>sqrt(x)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/SquareRoot.html">SquareRoot</a></td>
+    </tr>
+    <tr> 
+      <td>Sum</td>
+      <td>sum(x,y,...)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Sum.html">Sum</a></td>
+    </tr>
+    <tr> 
+      <td>Binomial coefficients</td>
+      <td>binom(n, i)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Binomial.html">Binomial</a></td>
+    </tr>
+    <tr> 
+      <td>Signum<br />
+      (-1,0,1 depending on sign of argument)</td>
+      <td>signum(x) </td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Signum.html">Signum</a></td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="complex" id="complex"></a>Complex Functions </h2>
+  <table width="100%" border="0" class="clean">
+    <tr> 
+      <th width="225"><strong>Description</strong></th>
+      <th>Function Name</th>
+      <th>Class Name</th>
+    </tr>
+    <tr> 
+      <td width="225">Real Component</td>
+      <td>re(c)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Real.html">Real</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Imaginary Component</td>
+      <td>im(c)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Imaginary.html">Imaginary</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Complex Modulus (Absolute Value)</td>
+      <td>cmod(c)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Abs.html">Abs</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Argument (Angle of complex value, in radians)</td>
+      <td>arg(c)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Arg.html">Arg</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Complex conjugate</td>
+      <td>conj(c)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Conjugate.html">Conjugate</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Complex, constructs a complex number from real and imaginary 
+        parts</td>
+      <td>complex(x, y)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/ComplexPFMC.html">ComplexPFMC</a></td>
+    </tr>
+    <tr> 
+      <td width="225">Polar, constructs a complex number from modulus and argument</td>
+      <td>polar(r, theta)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Polar.html">Polar</a></td>
+    </tr>
+  </table>
+  
+  <h3>Notes</h3>
+  <p><sup>1</sup> By default functions like <code>sqrt(-1)</code> will return a complex result. 
+    These functions have constructors with a flag to control their behaviour for
+    out of range values, if the flag is true, then the function will return <code>Double.NaN</code> for out of range real values.
+  If the flag is false they will return the appropriate complex result.</p>
+  <p><sup>2</sup> By default functions like <code>acos(2)</code> will return <code>Double.NaN</code>.
+    A constructor is available which sets a flag to make the function return the appropriate complex result for such cases. </p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="string" id="string"></a>String Functions</h2>
+  <p>The following string functions are not included in the standard configuration. They can however be added by loading the <a href="../javadoc/com/singularsys/jep/functions/strings/StringFunctionSet.html">StringFunctionSet</a> component using <code>jep.setComponent(new StringFunctionSet())</code> before parsing expressions. The individual functions can also be added using <code>jep.addFunction()</code>.</p>
+  <table width="100%" class="clean">
+    <tr>
+      <th width="225">Description</th>
+      <th width="150">Function Name </th>
+      <th>Class Name </th>
+    </tr>
+    <tr>
+      <td>Left</td>
+      <td>left(str, len)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/Left.html">Left</a></td>
+    </tr>
+    <tr>
+      <td>Right</td>
+      <td>right(str, len)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/Right.html">Right</a></td>
+    </tr>
+    <tr>
+      <td>Middle</td>
+      <td>mid(str, start, len)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/Mid.html">Mid</a></td>
+    </tr>
+    <tr>
+      <td>Substring</td>
+      <td>substr(str, start, [end])</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/Substring.html">Substring</a></td>
+    </tr>
+    <tr>
+      <td>Lower Case</td>
+      <td>lower(str)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/LowerCase.html">LowerCase</a></td>
+    </tr>
+    <tr>
+      <td>Upper Case</td>
+      <td>upper(str)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/UpperCase.html">UpperCase</a></td>
+    </tr>
+    <tr>
+      <td>Length</td>
+      <td>len(str)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/Length.html">Length</a></td>
+    </tr>
+    <tr>
+      <td>Trim</td>
+      <td>trim(str)</td>
+      <td><a href="../javadoc/com/singularsys/jep/functions/strings/Trim.html">Trim</a></td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a name="optional" id="optional"></a>Optional Functions</h2>
+  <p>
+  These functions are not included in the standard configuration, but can be added using <code>jep.addFunction()</code>.</p>
+  <p>In <a href="../javadoc/com/singularsys/jep/misc/functions/package-summary.html">com.singularsys.jep.misc.functions</a>:</p>
+  <table border="0" class="clean">
+    <tr> 
+      <th width="24%">Class</th>
+      <th width="76%">Description</th>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/LogTwoArg.html">LogTwoArg</a></td>
+      <td>Two argument log function where second argument is the base.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/Remainder.html">Remainder</a></td>
+      <td>Calculates the remainder and quotient the arguments. Constructors allow different conventions for remainder to be used.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/RoundSF.html">RoundSF</a></td>
+      <td>Rounds arguments to a specific number of significant figures.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/ToBase.html">ToBase</a></td>
+      <td>Converts numbers to a string in a given base.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/FromBase.html">FromBase</a></td>
+      <td>Converts a string in a given base to numbers.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/Switch.html">Switch</a></td>
+      <td>A switch statement. Returns the value of the argument based on the value of the first argument.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/SwitchDefault.html">SwitchDefault</a></td>
+      <td>A switch statement with a default value as final argument.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/Case.html">Case</a></td>
+      <td>A case statement, first argument is test condition, following arguments are in pairs with a test value and corresponding result.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/ElementOf.html">ElementOf</a></td>
+      <td>Tests if the first argument is and element of a set given by subsequent arguments.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/IsNull.html">IsNull</a></td>
+      <td>Tests if the argument is null.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/IsNaN.html">IsNaN</a></td>
+      <td>Tests if the argument is NaN.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/IsInfinite.html">IsInfinite</a></td>
+      <td>Tests if the argument is infinite.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/IsType.html">IsType</a></td>
+      <td>Test is the argument is of the type specifies in the constructor. E.g. <code>isDouble(x)</code></td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/ConstantFunction.html">ConstantFunction</a></td>
+      <td>Returns a constant specified in the constructor. E.g. <code>pi()</code></td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/functions/Factorial.html">Factorial</a></td>
+      <td>A simple factorial implementation good upto 20!</td>
+    </tr>
+  </table>
+  
+  <br />
+  <p>In <a href="../javadoc/com/singularsys/jep/functions/package-summary.html">com.singularsys.jep.functions</a>:</p>
+  <table width="100%" class="clean">
+    <tr>
+      <th width="24%">Class</th>
+      <th width="76%">Description</th>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/functions/Identity.html">Identity</a></td>
+      <td>Returns its argument.</td>
+    </tr>
+  </table>
+
+  <br />
+  <p>In <a href="../javadoc/com/singularsys/jep/misc/threadsafeeval/package-summary.html">com.singularsys.jep.misc.threadsafeeval</a>:</p>
+  <table width="100%" class="clean">
+    <tr>
+      <th width="24%">Class</th>
+      <th width="76%">Description</th>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/threadsafeeval/ThreadSafeEle.html">ThreadSafeEle</a></td>
+      <td>Threadsafe version of the element of operator.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/threadsafeeval/ThreadSafeAssign.html">ThreadSafeAssign</a></td>
+      <td>Threadsafe version of the assignment operator.</td>
+    </tr>
+    <tr>
+      <td><a href="../javadoc/com/singularsys/jep/misc/threadsafeeval/ThreadSafeRandom.html">ThreadSafeRandom</a></td>
+      <td>Version of the random function with better performance in a multi-threaded environment.</td>
+    </tr>
+  </table>
+  <p>These functions and operators work better in a multi threaded environment. See <a href="threads.html">Threads documentation</a> for details.
+  </p>
+  
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

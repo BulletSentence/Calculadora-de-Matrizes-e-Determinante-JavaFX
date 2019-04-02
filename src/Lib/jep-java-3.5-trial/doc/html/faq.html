@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - FAQ</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+        
+  <h1>Frequently Asked Questions</h1>
+        
+  <ul>
+    <li><a href="#accuracy">Why is  Jep giving inaccurate results?</a></li>
+    <li><a href="#handleNull">How should I handle NULL values?</a></li>
+    <li><a href="#evaluationException">Why am I getting an EvaluationException?</a></li>
+    <li><a href="#variableNamesWithDot">How can I allow variable names with a dot in them?</a></li>
+    <li><a href="#reduceSize">How can I reduce the size of Jep?</a></li>
+  </ul>
+  <h2><a id="accuracy"></a>Why is Jep giving inaccurate results?</h2>
+  <p>You will notice that when you evaluate something as simple as 
+      &quot;8 - 7.9&quot; the result will be 0.09999999999999964 rather than 0.1. 
+      These inaccuracies are the result of <b>floating point arithmetic</b>. Internally, 
+      Jep uses the <code>double</code> type to represent numbers by default. Unfortunately, 
+      even for trivial calculations such as &quot;8 - 7.9&quot; the calculation 
+      can not be performed accurately.</p>
+    <p>You will notice the same if you run the following code. </p>
+    <pre class="codebox">double a=8, b=7.9;
+System.out.println(&quot;a-b = &quot; + (a-b));
+//prints a-b = 0.09999999999999964</pre>
+    <p>So this is not a Jep flaw, just a limitation of using floating point numbers. Although floating point numbers are accurate enough for many applications, 
+      these types of errors should not be ignored in applications where accuracy 
+    is critical.</p>
+    <p>By using System.out.printf results from Jep can be displayed to 
+    a given number of decimal places. For example</p>
+    <pre class="codebox">jep.parse("8-7.9");
+double res = jep.evaluateD();
+System.out.printf("%.3f",res);</pre>
+    <p>Which will print the result to three decimal places: 0.100. See <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/Formatter.html">java.util.Formatter</a>
+    for details on formatting output. The 
+    <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/text/NumberFormat.html">java.text.NumberFormat</a> class can also be used to format results.    </p>
+    <p>Jep has a round function, which can round arguments to a given number of decimal places.
+    <code>round(8-7.9,1)</code> will round results to one decimal place.</p>
+    <p>To avoid this problem, use the BigDecimal components as described in the <a href="bigdecimal.html">BigDecimal section</a>. They allow you to perform calculations with arbitrary accuracy unlike floating point arithmetic. </p>
+ 
+  
+  <h2><a id="handleNull"></a>How should I handle NULL values?</h2>
+  <p>If Jep is throwing an exception <code>&quot;EvaluationException: Could not evaluate XXX : no
+    value set for the variable.</code>&quot; during evaluation, then you are running in to issues with null values.</p>
+  <p>It is important to note that by default variables whose values have not been set by either</p>
+  <pre class="codebox">jep.addVariable(name,value);</pre>
+<p>or by parsing an expression like</p>
+	<pre class="codebox">XXX = 123.456;</pre>
+<p>will remain initialized to null. So when you attempt to evaluate and expression with a null variable, the evaluator will by default throw an exception when the null value is encountered.</p>
+<p>There are a several of ways around this:</p>
+<ol>
+<li>Depending on the evaluator you are using, you can turn off the check for null values with
+  <pre class="codebox">((StandardEvaluator)jep.getEvaluator()).setTrapNullValues(false);</pre>
+or
+  <pre class="codebox">((FastEvaluator)jep.getEvaluator()).setTrapNullValues(false);</pre>
+in which case null values will be passed to the individual functions.</li>
+<li>You can change the default value used for unassigned variables
+  with
+  <pre class="codebox">jep.getVariableFactory().setDefaultValue(Double.valueOf(0.0));</pre>
+</li>
+<li>
+A more advanced treatment of null values would be to create 
+a type to represent genuine null values, 
+create a constant NULL to recognise NULL in the parser and 
+explicitly set NULL variables.   
+  <pre class="codebox">
+  Object MyNULL = new Object(); // create a null value
+  jep.addConstant("NULL",MyNULL); // define a constant in the parser
+  jep.addVariable("x",MyNULL); // add a variable with the NULL value
+  jep.parse("y=NULL"); // expression assigning a variable to NULL
+  jep.parse("x==NULL"); // Compare a variable to the NULL value
+  </pre>
+</li>
+<li>
+Since version 3.4, the 
+<a href="../javadoc/com/singularsys/jep/misc/nullwrapper/package-summary.html">src.com.singularsys.jep.misc.nullwrapper</a>
+package allows for null values to be treated like NULL in an SQL database. Any 
+function or operator with <code>null</code> as an argument will return <code>null</code>. For instance
+<code>null+5</code> will be <code>null</code>. The package takes existing operators and functions
+and adds a wrapper class which will test if a null value is input; 
+if so, null is returned, otherwise the original function is used. The <code>NullWrappedOperatorTable</code> and
+<code>NullWrappedFunctionTable</code> wrap all the existing operators and functions. To set this up use
+  <pre class="codebox">
+jep.setComponent(new NullWrappedOperatorTable(
+                  (OperatorTable2) jep.getOperatorTable(),true));
+jep.setComponent(new NullWrappedFunctionTable(jep.getFunctionTable()));
+jep.setComponent(new StandardConfigurableParser());
+((FastEvaluator) jep.getEvaluator()).setTrapNullValues(false);
+  </pre>
+<p>The operator table also adds an additional operator,
+the null safe equals <code>&lt;=&gt;</code> which works like equals, 
+but if both arguments are null will return true. 
+This needs the <code>StandardConfigurableParser</code> to for the operator to be recognized when parsing.
+</p>
+<p>The logical operators work like those in SQL so <code>null || true</code> is true, <code>null || false</code> is null,
+<code>null &amp;&amp; true</code> is null and <code>null &amp;&amp; false</code> is false. See
+<a href="../javadoc/com/singularsys/jep/misc/nullwrapper/functions/NullWrappedLazyLogical.html">NullWrappedLazyLogical</a>
+for the complete truth tables.</p>
+<p>The <code>If</code> function just tests the first argument for null, returning null if it is. If the first argument is true or false it will
+return the second or third argument respectively, these arguments can be null.</p>
+<p>The names of classes have been changed in version 3.5 and they generally begin <code>NullWrapped...</code>.</p>
+</li>
+</ol>
+
+  <h2><a id="evaluationException"></a>Why am I getting an EvaluationException?</h2>
+  <p>There can be several reasons for EvaluationExceptions to be thrown. Of course it is best to look at the message in the exception for more details.</p>
+  <p>If you are seeing</p>
+  <pre class="codebox">com.singularsys.jep.EvaluationException: Could not evaluate XXX : no
+    value set for the variable.</pre>
+  <p>then refer to <a href="#handleNull">"How should I handle NULL values?&quot;</a> in this FAQ.</p>
+  <p>Other evaluation exceptions are typically due functions or operators not being compatible with the data types passed in. Since Jep only checks data types during evaluation, you will not see these issues while parsing an expression. </p>
+  <h2><a id="variableNamesWithDot"></a>How can I allow variable names with a dot in them?</h2>
+  <p>
+  To do this, you need to use the <a href="confparser.html">Configurable Parser</a>
+  which allows great control over the input syntax. The following code sets up the parser 
+  with the standard options but 
+  using identifiers with a dot in them as well by using the factory method 
+  com.singularsys.jep.configurableparser.matchers.IdentifierTokenMatcher.dottedIndetifierMatcher().
+  The final step in setting up is to remove the dot-product "." operator to prevent any ambiguity.  </p>
+  
+<pre class="codebox">
+ConfigurableParser cp = new ConfigurableParser();
+cp.addHashComments();
+cp.addSlashComments();
+cp.addDoubleQuoteStrings();
+cp.addWhiteSpace();
+cp.addExponentNumbers();
+cp.addOperatorTokenMatcher();
+cp.addSymbols("(",")","[","]",",");
+cp.setImplicitMultiplicationSymbols("(","[");
+
+// Sets it up for identifiers with dots in them.
+cp.addTokenMatcher(IdentifierTokenMatcher.dottedIndetifierMatcher());
+
+cp.addSemiColonTerminator();
+cp.addWhiteSpaceCommentFilter();
+cp.addBracketMatcher("(",")");
+cp.addFunctionMatcher("(",")",",");
+cp.addListMatcher("[","]",",");
+cp.addArrayAccessMatcher("[","]");
+
+// Construct the Jep instance and set the parser
+jep = new Jep(cp);
+
+// Remove the dot operator
+OperatorTable2 ot = (OperatorTable2)jep.getOperatorTable();
+ot.removeOperator(ot.getDot());
+//notify other components of change in operator table
+jep.reinitializeComponents();
+</pre>
+
+<h2><a id="reduceSize"></a>How can I reduce the size of Jep?</h2>
+  
+          <p>The memory footprint of Jep can be reduced in a number of ways.</p>
+          <ul>
+          <li>By using the <code>StandardConfigurableParser</code> rather than the default parser.
+          This takes considerably less runtime space (4K) compared to 51K.          </li>
+          <li>If you do not need a parser you can use the <code>NullParser</code> which take virtually no space.
+          This can be used with <a href="serialization.html">SerializableExpression</a> where a compact representation of
+          an expression can stored on disk.</li>
+          <li>By not loading any functions. This can be achieved by using the <code>FunctionTable</code> component rather than the <code>StandardFunctionTable</code>.
+          Any functions needed can then be individually loaded using <code>Jep.addFunction()</code>.</li>
+          </ul>
+          <p>
+          For example you could create a Jep instance with no loaded functions with:</p>
+<pre class="codebox">Jep jep1 = new Jep(new FunctionTable(), new StandardConfigurableParser()); </pre>
+And you can create a Jep instance without parser,  without functions and without the ability to print with:
+<pre class="codebox">Jep jep2 = new Jep(new FunctionTable(), NullParser.NULL_PARSER, PrintVisitor.NULL_PRINT_VISITOR);</pre>
+    <p>The <a href="../javadoc/com/singularsys/jepexamples/diagnostics/ExamineSizes.html">com.singularsys.jepexamples.diagnostics.ExamineSizes</a> program gives
+    give a detailed breakdown of memory usage.</p>
+        
+
+<p>To reduce the disk space the <code>com/singularsys/jep/misc</code>, 
+<code>com/singularsys/jep/walker</code>, <code>com/singularsys/jep/bigdecimal</code> packages are all optional.
+None of the classes in the <code>com/singularsys/jepexamples</code> or <code>com/singularsys/jeptest</code> directories are needed.
+If the configurable parser is used then in the <code>com/singularsys/jep/parser</code> directory the <code>JccParser*</code>
+ classes can all be skipped.
+ Alternatively if the standard parser is used then the <code>com/singularsys/jep/configurableparser</code> package can be skipped completely.
+ </p>
+
+    <p>The <code>jep-java-3.5-min.jar</code> jar file is a fairly small example with a full set of functions and a working console application. 
+    which is less that 200K in size.</p>
+        
+<h2><a id="largeExpressions"></a>How to work with very large expressions</h2>
+<p>The size of expressions which can be worked with is mainly limited by the stack size allocated to java. This can be increased
+by using the <code>-Xss512k</code> argument to the Java VM.
+The <code>ConfigurableParser</code> can generally parse larger expressions than the standard parser. 
+The 
+<a href="../javadoc/com/singularsys/jep/walkers/PostfixEvaluator.html">PostfixEvaluator</a> has
+been written to not make heavy use of the stack and can evaluate expressions with over a million nodes. 
+The <a href="../javadoc/com/singularsys/jepexamples/diagnostics/DestructiveTests.java">DestructiveTests</a>
+application tests the size of expressions which can be parsed and evaluated.
+</p>        
+  <!--<p><b>Q: I don't need all the functions supplied by Jep. Is there a way 
+          to not load some of them, or completely remove some from the package?</b></p>
+        <blockquote> 
+          <p><b>A:</b> Stripping down Jep into a lean mean arithmetic machine!</p>
+          <p><b>Option 1:</b><br />
+            In some cases you will not require all the built in functions supported 
+            by Jep. The easiest way to accomplish this is simply not calling the 
+            addStandardFunctions() method before parsing. Then, you can call addFunction() 
+          for any specific functions you may require.</p>
+          <p><b>Option 2:</b><br />
+            If you think it is necessary to minimize the size of Jep to a minimum, 
+            you can remove all function classes other than the operators (if you 
+            don't need them). This will leave you with a parser that can still 
+            do basic arithmetic, but not the fancy functions like sin() and cos(). 
+          It saves you about 17KB of classes (15% of Jep in total). </p>
+          <p><b>Instructions:</b><br />
+            - The function classes are all located in the org.nfunk.jep.function 
+            package. Operators (+, -, *, /,&#133;) are also implemented as functions. 
+            These should NOT be removed if you still want Jep to work properly. 
+          The following function classes are used to implement operators:</p>
+          <blockquote> 
+            <table class="clean">
+              <tr> 
+                <td>Add</td>
+                <td>Modulus</td>
+                <td>Subtract</td>
+              </tr>
+              <tr> 
+                <td>Comparative</td>
+                <td>Multiply</td>
+                <td>UMinus</td>
+              </tr>
+              <tr> 
+                <td>Divide</td>
+                <td>Not</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr> 
+                <td>Logical</td>
+                <td>Power</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+          </blockquote>
+          <p> - Open the source code for Jep and look for the addStandardFunctions() 
+            method. It contains a list of almost all non-operator functions. For 
+            every function class you remove from the function directory, you must 
+            also remove the associated line from this method.<br />
+            - Recompile Jep, and you should have a lean mean arithmetic machine!<br />
+          </p>
+        </blockquote>-->
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

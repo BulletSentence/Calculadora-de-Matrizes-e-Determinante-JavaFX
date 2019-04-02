@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --><title>Jep Documentation - Configurable Parser</title><!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+
+
+  <h1><a  id="top"></a>Configurable Parser</h1>
+	
+  <p>Unlike the standard parser, the configurable parser can be configured at 
+    run time. It makes the process of adding new operators easier and allows other 
+    grammatical rules to be included. </p>
+  <h2>Using the configurable parser</h2>
+  <p>It is straightforward to use the configurable parser rather than the default
+  standard parser. Just use the <code>setComponent()</code> method as shown here:</p>
+    <pre class="codebox">Jep jep = new Jep();
+jep.setComponent(new StandardConfigurableParser());</pre>
+  <h2>Basic architecture</h2>
+	<p>The parser has two main parts: a tokenizer and a grammar analyzer. </p>
+
+	<p>The tokenizer breaks the input into a series of tokens and the grammar analyzer reads these tokens and turns them into
+	a tree of nodes. Each type of token is recognized by a 
+	<a href="../javadoc/com/singularsys/jep/configurableparser/matchers/TokenMatcher.html">TokenMatcher</a>
+	and new TokenMatchers can be added. There are Tokens and corresponding 
+	tokenMatchers for numbers, variables, strings, functions
+	operators, white space and comments. New TokenMatchers can be added at run time to allow a configurable syntax.</p>
+	
+	<p>After tokenizing, a filtering step is performed on the list of tokens. This is mainly used to remove white space and comments, although
+	other operations on the list could be performed.</p>
+	
+	
+  <p>The final stage is to interpret the tokens and build a tree of nodes. This 
+    stage uses the precedence rules of operators so that the expression <code>2*3+4</code> 
+    is correctly interpreted as <code>(2*3)+4</code> and not <code>2*(3+4)</code>. The 
+    core of the algorithm is an operator precedence parser using the <em>shunting 
+    yard algorithm</em>, most of the grammar rules are constructed from the operators 
+    specified in the OperatorTable and are build automatically. Additional grammar 
+    rules can be specified by adding <a href="../javadoc/com/singularsys/jep/configurableparser/matchers/GrammarMatcher.html">GrammarMatcher</a>s 
+    to the parser. Such additional rules are used to specify the syntax for functions, 
+    and lists. </p>
+  <h2>Standard options</h2>
+  
+  <p>There are two main classes
+  <a href="../javadoc/com/singularsys/jep/configurableparser/StandardConfigurableParser.html">StandardConfigurableParser</a>
+  is a parser with the most common configuration already set, and
+  <a href="../javadoc/com/singularsys/jep/configurableparser/ConfigurableParser.html">ConfigurableParser</a>
+  is a base parser which allows the full configuration to be specified. A number of methods are available to
+  add different types of behaviour:</p>
+  <dl>
+  <dt><strong>Comments</strong></dt>
+  <dd><ul>
+  	<li>addHashComments() - recognize comments starting with # until end of line.</li>
+  	<li>addSlashComments() - recognize java-style // and /* ... */ comments.</li>
+  	</ul>
+  </dd>
+  <dt><strong>Strings</strong></dt>
+  <dd><ul>
+  	<li>addDoubleQuoteStrings() - recognize double quoted strings &quot;..&quot;.</li>
+  	<li>addSingleQuoteStrings() - recognize single quoted strings '...'</li>
+  </ul></dd>
+  <dt><strong>White-space</strong></dt>
+  <dd><ul>
+  	<li>addWhiteSpace() - recognize standard white-space characters.</li>
+  	<li>addWhiteSpaceCommentFilter() - filter out white space and comments before the syntactical stage. Both of these should generally be added.</li>
+  </ul></dd>
+  <dt><strong>Numbers</strong></dt>
+  <dd><ul>
+  	<li>addExponentNumbers() - recognize numbers with or without an exponent 1.2, 1.2e2, 1.2E-2 etc.</li>
+  	<li>addSimpleNumbers() - recognize only numbers without exponents.</li>
+  </ul></dd>
+  <dt><strong>Operators</strong></dt>
+  <dd><ul>
+  	<li>addOperatorTokenMatcher() - recognize operators specified by the operator set.</li>
+  </ul></dd>
+  <dt><strong>Symbols</strong></dt>
+  <dd><ul>
+  	<li>addSymbols(&quot;(&quot;,&quot;)&quot;,&quot;[&quot;,&quot;]&quot;,&quot;,&quot;) - recognize additional symbols.</li>
+  	<li>setImplicitMultiplicationSymbols(&quot;(&quot;,&quot;[&quot;) - allows the given symbols to be used on the right hand side of an implicit multiplication.
+  	For example 3 (x+1). Note the jep.setImplicitMul(true) should be set to allow implicit multiplication.</li>
+  </ul></dd>
+  <dt><strong>Identifiers</strong></dt>
+  <dd><ul>
+  	<li>addIdentifiers() - recognize java-style variable and function names.</li>
+  </ul></dd>
+  <dt><strong>Terminators</strong></dt>
+  <dd><ul>
+  	<li>addSemiColonTerminator() - when a semi-colon is encountered, parsing end. This allows several equations to be separated by ;.</li>
+  </ul></dd>
+  <dt><strong>Grammatical sequences</strong></dt>
+  <dd><ul>
+  	<li>addBracketMatcher(&quot;(&quot;,&quot;)&quot;) - match bracketed expressions: 2*(3+4).</li>
+  	<li>addFunctionMatcher(&quot;(&quot;,&quot;)&quot;,&quot;,&quot;) - match functions: atan2(y,x).</li>
+  	<li>addListMatcher(&quot;[&quot;,&quot;]&quot;,&quot;,&quot;) - matches vectors/arrays: [1,2,3].</li>
+  	<li>addArrayAccessMatcher(&quot;[&quot;,&quot;]&quot;) - matches array access: a[3].</li>
+  	<li>addListOrBracketMatcher(&quot;(&quot;,&quot;)&quot;,&quot;,&quot;) - matches lists: (1,2) or brackets: (1+2), depending on number of arguments.</li>
+  </ul>
+  The arguments of these methods should match those in addSymbols().
+  </dd>
+  </dl>
+  
+  <p>The order of these methods is important, the earlier matchers will be called before later ones.
+  It is generally better to add the matchers in the order given above.
+  </p>
+  
+  <p>Other matchers are available, but these do not have corresponding methods exposed by ConfigurableParser.
+  For example com.singularsys.jep.configurableparser.matchers.HexNumberTokenMatcher() matches hexadecimal numbers.
+  This can be added to the parser using <code>addTokenMatcher(new HexNumberTokenMatcher())</code>.</p>
+  
+  <h2>Adding and changing the tokenizer stage</h2>
+	
+	
+  <p>To allow new lexical elements, a new TokenMatcher should be added to the 
+    list of token matchers used by the parser using the <code>ConfigurableParser.addTokenMatcher()</code> method. A number of predefined TokenMatchers 
+    are already defined. See the <a href="../javadoc/com/singularsys/jep/configurableparser/matchers/package-summary.html">matchers 
+    Javadoc</a> for a list of these. </p>
+  <p>To create a new TokenMatcher, a new class implementing the TokenMatcher interface 
+    should be created. Typically this will sub-class one of the existing TokenMatchers. </p>
+  <pre class="codebox">
+package com.singularsys.jep.configurableparser.matchers;
+public interface TokenMatcher {
+	/** Attempts to match the start of the string.
+	 * @param s the string to match against
+	 * @return if successful returns the corresponding token, 
+	 *   return null if failed to match
+	 */
+	public abstract Token match(String s);
+	/** Initialize the matcher when the Jep instance is known. */
+	public void init(Jep j);
+}
+	</pre>
+  In general the match method should return one of the pre-defined tokens listed 
+  in <a href="../javadoc/com/singularsys/jep/configurableparser/tokens/package-summary.html">tokens 
+  javadoc</a> although other token types can be used if there is a corresponding 
+  GrammarMatcher. 
+  <p> Once created, the TokenMatcher needs to be added to the list of matchers 
+    used by the parser. The order is important as each matcher is called in turn 
+    and some input will match more than one type of input. Typically the full 
+    set of lists will need to be added in the correct order. See the example below. </p>
+  <h2>Adding new operators</h2>
+	
+  <p>Most changes to the syntax will simply consist of adding new operators or 
+    changing the symbol of existing operators. A simple example would be: </p>
+  <pre class="codebox">
+OperatorTable ot = jep.getOperatorTable();
+// create a bit-wise complement operator
+Operator op = new Operator(&quot;~&quot;,new bitComp(),Operator.UNARY+Operator.PREFIX);
+// add it with the same precedence as not
+ot.addOperator(op, ot.getNot());
+// informs the parser and other components about the new operator
+jep.reinitializeComponents();
+</pre>
+  <p>Once added, the new operator is ready to be used in the parser. For more details 
+    on adding operator see <a href="operators.html">Operators manual page</a>. </p>
+  <h2>Adding a GrammarMatcher</h2>
+
+	<p>
+	New grammatical rules can be implemented by creating a class implementing the 
+	<a href="../javadoc/com/singularsys/jep/configurableparser/matchers/GrammarMatcher.html">GrammarMatcher</a> interface.
+	and adding it the the parser using <code>ConfigurableParser.addGrammarMatcher()</code>.	</p>
+		
+  <pre class="codebox">
+/**
+ * Interface defining matchers for custom grammatical elements.
+ * GrammarMatchers match syntax elements at the same precedence level
+ * as brackets.
+ */
+public interface GrammarMatcher {
+	/** Test whether the input matches this pattern.
+	 * @param it An iterator inspecting the input
+	 * @param parser the parser to use when evaluating sub-expressions
+	 * @return if matched returns a node representing the content, 
+	 *  returns null if does not match
+	 * @throws ParseException 
+	 */
+	public Node match(Lookahead2Iterator&gt;Token&lt; it,GrammarParser parser)
+					throws ParseException;
+	
+	/** Delayed initialization, this methods is called 
+	 * whenever components of the Jep instance are changed. 
+	 * @param jep
+	 */
+	public void init(Jep jep);
+}
+</pre>
+<p>The match method can query the next two tokens from the input using <code>it.peekNext()</code> and <code>it.nextNext()</code>
+if these tokens match the rule then the current position of the input should be advanced using <code>it.consume()</code>.
+If the rule does not match then the match method should return <code>null</code> before calling <code>it.consume()</code>.
+Further tokens can be read using a combination of <code>it.peekNext()</code> and <code>it.consume()</code>.
+</p>
+  <p> Various methods of the <a href="../javadoc/com/singularsys/jep/configurableparser/tokens/Token.html">Token</a> 
+    class can be used to query the type of token; for instance <code>Token.isFunction()</code>, 
+    <code>Token.isIdentifier()</code>, <code>Token.isNumber()</code>. The <code>Token.equals(Object 
+    o)</code> method can also be used to check the status of tokens. </p>
+  <p> For functions and lists it may be necessary to parse the arguments or list 
+    elements. These can be parsed using the <code>public Node parseSubExpression()</code> 
+    method of the <a href="../javadoc/com/singularsys/jep/configurableparser/GrammarParser.html">GrammarParser</a> 
+    interface. </p>
+  <p> Once the input has been parsed, the resulting node needs to be assembled. 
+    Here the <a href="../javadoc/com/singularsys/jep/NodeFactory.html">NodeFactory</a> 
+    methods can be used to construct nodes of the appropriate type. The OperatorTable, 
+    FunctionTable, VariableTable and NumberFactory classes can also be used. </p>
+
+<h3>SymbolTokens</h3>
+<p>
+New syntactical features may require special symbols, for instance the <code>[</code> and <code>]</code>
+used to represent lists. These symbols need to be recognized by the Tokenizer stage
+and used later by appropriate GrammarMatchers, they are represented by SymbolToken.
+The <code>ConfigurableParser.addSymbols()</code> can be used to add symbols to the parser
+and <code>ConfigurableParser.getSymbolToken(String sym)</code> to return the corresponding SymbolToken.
+The SymbolTokens can then be passed
+in the constructor of a GrammarMatcher and the token's <code>equals()</code> method used to test it it the same token
+as in the input.</p>
+<pre class="codebox">
+public class myGrammarMatcher {
+	SymbolToken colon;
+	public myGrammarMatcher(SymbolToken colon) {
+		this.colon = colon;
+	}
+	public Node match(Lookahead2Iterator&lt;Token&gt; it,GrammarParser parser)
+				throws ParseException;
+	{
+		Token t = it.peekNext();
+		// use this way round to avoid problems when t is null
+		if (colon.equals(t))
+			....
+	}
+}
+
+// Create a special symbol and add it to the list 
+ConfigurableParser cp = new ConfigurableParser();
+...
+cp.addSymbol(&quot;:&quot;);
+SymbolToken st = cp.getSymbolToken(&quot;:&quot;);
+...
+GrammarMatcher gm = new myGrammarMatcher(st);
+cp.addGrammarMatcher(gm);
+</pre>
+
+<h3>Example grammar matcher</h3>
+The following code is an example of matching a function 
+  <pre class="codebox">
+/**
+ * A GrammarMatcher which matches functions in the form 'atan2(y,x)'.
+ * The function must be in the FunctionTable and brackets are required.
+ */
+public class FunctionGrammarMatcher implements GrammarMatcher {
+Token open; // Token representing opening bracket
+Token close; // Token representing closing bracket
+Token comma; // Token representing argument separator
+NodeFactory nf; // The node factory
+
+/**
+ * Create a FunctionGrammarMatcher
+ * @param open token representing an opening bracket
+ * @param close token representing a closing bracket
+ * @param comma token representing a list item separator 
+ */
+public FunctionGrammarMatcher(Token open, Token close, Token comma) {
+    this.open = open;
+    this.close = close;
+    this.comma = comma;
+}
+
+// store the node factory for later use
+public void init(Jep jep) {
+    nf = jep.getNodeFactory();
+}
+
+// Try to match the rule
+public Node match(Lookahead2Iterator&lt;Token&gt; it, GrammarParser parser)
+        throws ParseException {
+    Token t = it.peekNext(); // look at next token 
+    if (t == null) return null;
+    if (!t.isFunction()) return null; // return if not a function
+
+    // is the next token an open bracket?
+    if (!open.equals(it.nextnext())) return null;
+
+    // input will match 'cos', '('
+    it.consume(); // advance by two tokens
+    it.consume();
+    String name = t.getSource();
+    PostfixMathCommandI pfmc = ((FunctionToken) t).getPfmc();
+    
+    // if next token is the closing bracket construct node and return
+    if (close.equals(it.peekNext())) {
+        it.consume();
+        return nf.buildFunctionNode(name, pfmc,new Node[0]);
+    }
+    
+    // function will have one or more arguments
+    List&lt;Node&gt; seq=new ArrayList&lt;Node&gt;();
+
+    while (true) {
+        // read next argument
+        Node contents = parser.parseSubExpression();
+        seq.add(contents);
+        
+        // if next token is a closing bracket?
+        if (close.equals(it.peekNext())) 
+            break;
+        else if(comma.equals(it.peekNext())) // is next token a comma
+            it.consume(); // if so advance the input
+        else // syntax error
+            throw new ParseException(&quot;Closing bracket not found&quot;);
+    }
+    
+    it.consume(); // advance the input to consume the ')' 
+    
+    // Build a node representing the function
+    return nf.buildFunctionNode(name, pfmc,
+            seq.toArray(new Node[seq.size()]));
+}
+}</pre>
+
+
+<h2>Example usage</h2>
+
+<p>
+The following code illustrates how a configurable parser could be initialized. This is the
+same sequence as the StandardConfigurableParser.   
+</p>
+<pre class="codebox">
+ConfigurableParser cp = new ConfigurableParser();
+cp.addHashComments();
+cp.addSlashComments();
+cp.addDoubleQuoteStrings();
+cp.addWhiteSpace();
+cp.addExponentNumbers();
+cp.addOperatorTokenMatcher();
+cp.addSymbols(&quot;(&quot;,&quot;)&quot;,&quot;[&quot;,&quot;]&quot;,&quot;,&quot;);
+cp.setImplicitMultiplicationSymbols(&quot;(&quot;,&quot;[&quot;);
+cp.addIdentifiers();
+cp.addSemiColonTerminator();
+cp.addWhiteSpaceCommentFilter();
+cp.addBracketMatcher(&quot;(&quot;,&quot;)&quot;);
+cp.addFunctionMatcher(&quot;(&quot;,&quot;)&quot;,&quot;,&quot;);
+cp.addListMatcher(&quot;[&quot;,&quot;]&quot;,&quot;,&quot;);
+cp.addArrayAccessMatcher(&quot;[&quot;,&quot;]&quot;);
+
+// Construct the Jep instance and set the parser
+jep = new Jep();
+jep.setComponent(cp);
+ 	</pre><!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

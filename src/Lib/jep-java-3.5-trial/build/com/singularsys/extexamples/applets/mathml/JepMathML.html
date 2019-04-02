@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE math PUBLIC "-//W3C//DTD MathML 2.0//EN"
+	    "http://www.w3.org/Math/DTD/mathml2/mathml2.dtd">
+
+<html>
+<head>
+<title>Jep: Creating mathml from expressions</title>
+</head>
+<body>
+
+<script type="text/javascript">
+<!--
+document.write('<p>Hello</p>');
+function render()
+{
+	var div=document.getElementById("outputDiv");
+
+	var res = document.applets[0].render();
+	alert(res);
+	return false;
+	var ls ="\n";
+	var res = 	"<math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns=\"http://www.w3.org/1998/Math/MathML\">" + ls + 
+	"<mrow>" + ls + 
+	"<msup>" + ls + 
+	"<mi>x</mi>" + ls + 
+	"<mn>2</mn>" + ls + 
+	"</msup>" + ls + 
+	"<mo> + </mo>" + ls + 
+	"<mn>4</mn>" + ls + 
+	"<mo>&#x2062;</mo>" + ls + 
+	"<mi>x</mi>" + ls + 
+	"<mo> + </mo>" + ls + 
+	"<mn>4</mn>" + ls + 
+	"</mrow>" + ls + 
+	"</math>" + ls;
+
+	div.innerHTML = res; 
+	
+}
+// -->
+</script>
+
+<applet width="100%" height="50"
+	code="com.singularsys.extexamples.applets.mathml.MathMLApplet"
+        codebase="../../../../../../bin"
+	mayscript
+>
+<param name="StyleSheet" value="mmlctop2_0.xsl"/>
+</applet>
+
+<form>
+<input type="button" value="Render" onClick="render();">
+</form>
+
+
+<div id="outputDiv">
+
+</div>
+
+<h2>plain mathml</h2>
+
+	</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Jep: Creating mathml from expressions</title>
+</head>
+<body>
+
+<script type="text/javascript">
+<!--
+function render()
+{
+/*	var div=document.getElementById("outputDiv");
+
+	//alert(res);
+	//return false;
++'<math xmlns="&mathml;">'
++'    <mfrac>'
++'      <mi>a</mi>'
++'      <mi>b</mi>'
++'    </mfrac>'
++'</math>'
+
+	div.innerHTML = res; 
+	var ls ="\n";
+	var res = 	"<math xmlns=\"&mathml;\">" + ls + 
+	"<mrow>" + ls + 
+	"<msup>" + ls + 
+	"<mi>x</mi>" + ls + 
+	"<mn>2</mn>" + ls + 
+	"</msup>" + ls + 
+	"<mo> + </mo>" + ls + 
+	"<mn>4</mn>" + ls + 
+	"<mo>&#x2062;</mo>" + ls + 
+	"<mi>x</mi>" + ls + 
+	"<mo> + </mo>" + ls + 
+	"<mn>4</mn>" + ls + 
+	"</mrow>" + ls + 
+	"</math>" + ls;
+*/	
+	var res = document.applets[0].render();
+
+	var  source = '<?xml version="1.0"?>'
+         + '<!DOCTYPE html PUBLIC'
+         + ' "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"'
+         + ' "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd"'
+         + '['
+         + ' <!ENTITY mathml "http://www.w3.org/1998/Math/MathML">'
+         + ']>'
+         + ''
+         + '<body>'
+
+			+ res
+
+         + '</body>'
+         + '';
+  var target = document.getElementById("outputID");
+  target.setAttribute("src","data:text/xml;charset=utf-8," + escape(source));
+ 
+}
+// -->
+</script>
+
+<applet width="100%" height="50"
+	code="com.singularsys.extexamples.applets.mathml.MathMLApplet"
+	codebase="../../../../../../lbin"
+	mayscript="true"
+>
+</applet>
+
+<form>
+<input type="button" value="Render" onClick="render();"/>
+</form>
+
+<div id="outputDiv">
+
+</div>
+
+ <p><iframe id="outputID" src=
+  "data:text/html,The MathML rendering will appear here." width="98%"
+  height="150">You need a MathML-enabled Gecko-based browser.</iframe></p>
+
+
+<h2>presentation mathml</h2>
+<math xmlns="&mathml;">
+    <mfrac>
+      <mi>a</mi>
+      <mi>b</mi>
+    </mfrac>
+  </math>
+
+<h2>content mathml</h2>
+<math xmlns="&mathml;">
+      <power/>
+	    <ci>x</ci>
+	    <cn>2</cn>
+  </math>
+
+
+	</body>
+</html>

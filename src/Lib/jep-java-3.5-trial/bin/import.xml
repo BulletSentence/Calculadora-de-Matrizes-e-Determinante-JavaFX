@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<project name="jepimport">
+	<!-- set the following two properties for locations to copy too and from -->
+	<property name="fromdir"  location="${basedir}/../jep/src/org/lsmp"/>
+	<property name="todir"  location="./src/org/singsurf/"/>
+	
+	<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp" />
+	
+	<target name="clean">
+		<delete dir="${todir}" />
+	</target> 
+    
+    <target name="import" description="import files from jep 2">
+ 		<copy todir="${todir}" overwrite="true">
+			<fileset dir="${fromdir}">
+				<exclude name="**/NodeFactory.java" />
+				<exclude name="**/PrintVisitor.java" />
+			</fileset>
+		</copy>
+    </target>
+	
+    <target name="replace">
+    	<replace dir="${todir}" summary="true">
+    		<replacefilter token="org.nfunk.jep" value="com.singularsys.jep" />
+    		<replacefilter token="com.singularsys.jep.function" value="com.singularsys.jep.functions" />
+    		<replacefilter token="com.singularsys.jep.functions.PostfixMathCommandI" value="com.singularsys.jep.PostfixMathCommandI" />
+    		<replacefilter token="JEP" value="Jep" />
+			<replacefilter token="run(Stack s) throws ParseException" 
+				value="run(Stack s) throws EvaluationException" />
+
+			<replacefilter token="visit(ASTFunNode node, Object data) throws ParseException"
+				value="visit(ASTFunNode node, Object data) throws JepException" />
+			<replacefilter token="visit(ASTFunNode node, Object data)  throws ParseException"
+				value="visit(ASTFunNode node, Object data) throws JepException" />
+			<replacefilter token="visit(ASTConstant node, Object data) throws ParseException"
+				value="visit(ASTConstant node, Object data) throws JepException" />
+			<replacefilter token="visit(ASTConstant node, Object data)  throws ParseException"
+				value="visit(ASTConstant node, Object data) throws JepException" />
+			<replacefilter token="visit(ASTVarNode node, Object data) throws ParseException"
+				value="visit(ASTVarNode node, Object data) throws JepException" />
+			<replacefilter token="visit(ASTVarNode node, Object data)  throws ParseException"
+				value="visit(ASTVarNode node, Object data) throws JepException" />
+			<replacefilter token="visit(ASTStart node, Object data) throws ParseException"
+				value="visit(ASTStart node, Object data) throws JepException" />
+			<replacefilter token="visit(SimpleNode node, Object data) throws ParseException"
+				value="visit(SimpleNode node, Object data) throws JepException" />
+
+			<replacefilter token="import com.singularsys.jep.ASTFunNode;" value="" />
+			<replacefilter token="import com.singularsys.jep.ASTVarNode;" value="" />
+			<replacefilter token="import com.singularsys.jep.ASTConstant;" value="" />
+			<replacefilter token="import org.singsurf.djep.xjep.PrintVisitor;" value="" />
+			<replacefilter token="import org.singsurf.djep.xjep.PrintVisitor.PrintRulesI;" value="" />
+			<replacefilter token="import com.singularsys.jep.Node;" value="" />
+   			<replacefilter token="getSymbolTable" value="getVariableTable" />
+   			<replacefilter token="getOperatorSet" value="getOperatorTable" />
+   			<replacefilter token="getFunctionTable().get(" value="getFunctionTable().getFunction(" />
+   			<replacefilter token="funTab.get(" value="funTab.getFunction(" />
+   			<replacefilter token=".symTab" value=".varTab" />
+   			<replacefilter token=".opSet" value=".opTab" />
+   			<replacefilter token="import com.singularsys.jep.type.*;" value="" />
+   			<replacefilter token="import com.singularsys.jep.type.Complex;" value="" />
+   			<replacefilter token="EvaluatorI" value="Evaluator" />
+   			<replacefilter token=" OperatorSet" value=" OperatorTable" />
+   			<replacefilter token="(OperatorSet" value="(OperatorTable" />
+   			<replacefilter token="evaluate(Object elements[]) throws ParseException" value="evaluate(Object[] elements) throws EvaluationException" />
+   			<replacefilter token="evaluate(Object[] elements) throws ParseException" value="evaluate(Object[] elements) throws EvaluationException" />
+			<replacefilter token="acceptChildrenAsArray(Node node,Object data)  throws ParseException"
+				value="acceptChildrenAsArray(Node node,Object data)  throws JepException" />
+    	</replace>
+
+
+   		<replaceregexp match="\bSymbolTable" replace="VariableTable">
+   			<fileset dir="${todir}"/>
+   		</replaceregexp>
+   		<replaceregexp match="\bOperatorSet" replace="OperatorTable">
+   			<fileset dir="${todir}"/>
+   		</replaceregexp>
+   		
+    	<replaceregexp match="^package.*$"
+    		replace="\0import com.singularsys.jep.parser.Node;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="Node" />
+    		</fileset>
+    	</replaceregexp>
+
+    	<replaceregexp match="^package.*$" 
+    		replace="\0import com.singularsys.jep.parser.ASTFunNode;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="ASTFunNode" />
+    		</fileset>
+    	</replaceregexp>
+
+    	<replaceregexp match="^package.*$" 
+    		replace="\0import com.singularsys.jep.parser.ASTVarNode;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="ASTVarNode" />
+    		</fileset>
+    	</replaceregexp>
+
+    	<replaceregexp match="^package.*$" 
+    		replace="\0import com.singularsys.jep.parser.ASTConstant;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="ASTConstant" />
+    		</fileset>
+    	</replaceregexp>
+
+   	<replaceregexp match="^package.*$" 
+    		replace="\0import com.singularsys.jep.parser.ASTStart;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="ASTStart" />
+    		</fileset>
+    	</replaceregexp>
+
+
+   	<replaceregexp match="^package.*$" 
+    		replace="\0import com.singularsys.jep.parser.SimpleNode;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="SimpleNode" />
+    		</fileset>
+    	</replaceregexp>
+
+   	<replaceregexp match="^package.*$" 
+    		replace="\0import com.singularsys.jep.standard.Complex;${line.separator}" 
+    		flags="m">
+    		<fileset  dir="${todir}">
+    			<contains text="Complex" />
+    		</fileset>
+    	</replaceregexp>
+
+    	<replace dir="${todir}" token="ParseException" value="EvaluationException"
+    		summary="true">
+    		<contains text="extends PostfixMathCommand" />
+    	</replace>
+
+    	<replace dir="${todir}" token="ParseException" value="EvaluationException"
+    		summary="true">
+    		<contains text="extends SumType" />
+    	</replace>
+
+   	<replace dir="${todir}" token="ParseException" value="JepException"
+    		summary="true">
+    		<contains text="extends DoNothingVisitor" />
+    	</replace>
+
+    	<replace dir="${todir}" token="public void run(Stack" summary="true">
+    		<replacevalue><![CDATA[public void run(Stack<Object>]]></replacevalue>
+    	</replace>
+
+    </target>
+</project>

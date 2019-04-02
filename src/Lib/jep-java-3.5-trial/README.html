@@ -1,0 +1,224 @@
+<html>
+<head>
+<title>Jep Java - Math Expression Parser</title>
+<style type="text/css">
+body  {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:10pt;
+}
+
+img {
+	border: 0px;
+}
+
+a {
+	color: #036;
+}
+
+a:visited {
+	color: #009;
+}
+
+a:hover {
+	color: #33f;
+}
+
+
+h1 {
+	color: #003;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 17pt;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-bottom: solid;
+	border-width: 1px;
+	border-color: #ccc;
+}
+
+h2 {
+	color: #036;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15pt;
+	margin-top: 30px;
+	margin-bottom: 5px;
+	padding-bottom: 0px;
+}
+
+h2.version {
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 15pt;
+	margin-top: 30px;
+}
+
+h2.version .date {
+	color: #999;
+}
+
+h3 {
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-bottom: 3px;
+	font-size: 12pt;
+}
+
+p {
+	margin-top: 5px;
+}
+
+td {
+	font-size: 10pt;
+}
+
+
+code {
+	font-family: 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace;	
+	background-color: #fff9ee;
+}
+
+dd {
+	margin-bottom: 5px;
+}
+
+li {
+	margin-bottom: 5px;
+}
+
+
+</style>
+</head>
+<body>
+
+      <h1>Jep - Java Expression Parser</h1>
+      <p>Version: Jep 3.5 trial</p>
+
+
+      <h3>Local Links</h3>
+      <ul>
+        <li><a href="doc/html/index.html">Documentation</a> - the full Jep manual</li>
+        <li><a href="doc/javadoc/index.html">JavaDoc</a> - class documentation</li>
+      </ul>
+      <h3>Web Links</h3>
+       <ul>
+        <li><a href="http://www.singularsys.com/jep/">Jep Homepage</a></li>
+        <li><a href="http://www.singularsys.com/feedback/">Leave Feedback</a></li>
+      </ul>     
+      <h3>Package Contents</h3>
+      <table style="padding: 5px; border: 0;">
+        <tr> 
+          <td width="23%"><a href="COPYRIGHT.txt">COPYRIGHT.txt</a></td>
+          <td width="77%">Copyright information</td>
+        </tr>
+        <tr>
+          <td width="23%"><a href="LICENSE-trial.txt">LICENSE-trial.txt</a></td>
+          <td width="77%">License agreement</td>
+        </tr>
+        <tr>
+          <td width="23%">jep-java-3.5-trial.jar</td>
+          <td width="77%">Jar file with core Jep classes</td>
+        </tr>
+        <!--
+        <tr>
+          <td width="23%" style="verticle-align: top;">jep-java-3.5-trial.jar</td> 
+          <td width="77%">Runnable Jar file.<br/>
+        </tr>
+        <tr>
+          <td width="23%" style="verticle-align: top;">jep-java-3.5-trial.jar</td> 
+          <td width="77%">Minimal Jar file.<br/>
+        </tr>
+        -->
+        <tr> 
+          <td width="23%">bin/</td>
+          <td width="77%">Scripts for launching examples</td>
+        </tr>
+        <tr> 
+          <td width="23%">build/</td>
+          <td width="77%">Compiled class files</td>
+        </tr>
+        <tr> 
+          <td width="23%"><a href="doc/html/index.html">doc/html</a></td>
+          <td width="77%">HTML Documentation</td>
+        </tr>
+        <tr> 
+          <td width="23%"><a href="doc/javadoc/index.html">doc/javadoc</a></td>
+          <td width="77%">JavaDocs</td>
+        </tr>
+         <tr> 
+          <td width="23%">dist/</td>
+          <td width="77%">Distribution files (including JAR files)</td>
+        </tr>
+        <tr> 
+          <td width="23%">lib/</td>
+          <td width="77%">Libraries (JUnit)</td>
+        </tr>
+        <tr> 
+          <td width="23%">src/</td>
+          <td width="77%">Source code (Trial and binary versions contain code for examples and junit tests. 
+          Full version contains all code)</td>
+        </tr>
+      </table>
+
+      <h3>Running examples</h3>
+      
+      <p>Using supplied jar files:</p>
+          <dl>
+          <dt>Console application</dt>
+          <dd><code>java -jar jep-java-3.5-trial.jar</code></dd>
+          <dt>Function Plotter</dt>
+          <dd><code>java -cp jep-java-3.5-trial.jar com.singularsys.jepexamples.applets.FunctionPlotter</code><dd>
+          <dt>Fractal</dt>
+          <dd><code>java -cp jep-java-3.5-trial.jar com.singularsys.jepexamples.applets.Fractal</code><dd>
+          <!--
+          <dt>ImplicitPlotter</dt>
+          <dd><code>java -cp jep-ext-withexamples.jar com.singularsys.extexamples.applets.ImplicitPlotter</code>
+          <dt>FieldFunctionPlotter</dt>
+          <dd><code>java -cp jep-ext-withexamples.jar com.singularsys.extexamples.applets.FieldFunctionPlotter</code>
+          -->
+          </td>
+          </dl>
+      
+      <p>Using build directory
+          <dl>
+          <dt>Console application</dt>
+          <dd><code>java -cp build com.singularsys.jepexamples.consoles.Console</code></dd>
+          <dt>Function Plotter</dt>
+          <dd><code>java -cp build com.singularsys.jepexamples.applets.FunctionPlotter</code><dd>
+          <dt>Fractal</dt>
+          <dd><code>java -cp build com.singularsys.jepexamples.applets.Fractal</code><dd>
+          <!--
+          <dt>ImplicitPlotter</dt>
+          <dd><code>java -cp build com.singularsys.extexamples.applets.ImplicitPlotter</code>
+          <dt>FieldFunctionPlotter</dt>
+          <dd><code>java -cp build com.singularsys.extexamples.applets.FieldFunctionPlotter</code>
+          -->
+          </td>
+          </dl>
+      
+      
+      <h3>Java Versions</h3>
+      <p>
+      The code has been compiled with both source and target set to Java version 1.7
+      this is to ensure it works with older version which some customers have installed.
+      The code should run fine with Java SE 8, 9 or 10. During
+      building a warning message
+      <pre>
+      [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.7
+      </pre>
+      appears. For later versions of java the property
+      <pre>
+      &lt;property name="java-version" value="1.7" /&gt;
+      </pre>   
+      can be changed in the <code>build.xml</code> file.
+      To run with Java SE 7 it may be necessary to set the <code>bootclasspath</code>
+      See
+      <a href="https://stackoverflow.com/questions/28287383/ant-javac-task-errs-out-javac-warning-options-bootstrap-class-path-not-set">Stackoverflow Question</a>
+      and
+      <a href="https://blogs.oracle.com/darcy/new-javac-warning-for-setting-an-older-source-without-bootclasspath">Oracle Blog</a>
+      for details.
+      <hr>
+      Copyright (c) 2018 Singular Systems
+
+</body>
+</html>

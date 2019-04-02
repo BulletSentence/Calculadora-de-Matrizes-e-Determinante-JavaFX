@@ -1,0 +1,775 @@
+package com.singularsys.jep;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StringReader;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.singularsys.jep.parser.Node;
+import com.singularsys.jep.standard.Complex;
+import com.singularsys.jep.standard.StandardComponents;
+
+/**
+ * The Jep class is the main interface with which the user should
+ * interact. It contains all necessary methods to parse and evaluate
+ * expressions.
+ * 
+ * To evaluate an expression, simply call the <code>parse(String)</code> and
+ *  <code>evaluate</code> methods after each other. The following code snippet
+ *  shows a parsing and evaluating a simple expression with a single variable:
+ * <pre>Jep jep = new Jep();
+ * try {
+ *   jep.addVariable("x", 10);
+ *	 jep.parse("x+1");
+ *	 Object result = jep.evaluate();
+ *	 System.out.println("x + 1 = " + result);
+ * } catch (JepException e) {
+ *	 System.out.println("An error occurred: " + e.toString());
+ * }
+ * </pre>
+ * <p>
+ * The class is serializable. Please see the documentation section 
+ * "Serialization" for more information on the various options for serializing.
+ */
+public class Jep implements Serializable {
+    /*trialcode
+	private transient int pcount = 0;
+trialcode*/
+    private static final long serialVersionUID = 301L;
+
+    /** Number Factory 
+     * @serial
+     **/
+    protected NumberFactory numFac;
+    /** Variable Factory 
+     * @serial
+     **/
+    protected VariableFactory varFac;
+    /** Node Factory 
+     * @serial
+     **/
+    protected NodeFactory nodeFac;
+    /** Variable Table
+     * @serial
+     **/
+    protected VariableTable varTab;
+    /** Function Table 
+     * @serial
+     **/
+    protected FunctionTable funTab;
+    /** Operator Table 
+     * @serial
+     **/
+    protected OperatorTableI opTab;
+    /** PrintVisitor 
+     * @serial
+     **/
+    protected PrintVisitor pv;
+
+    /** Root node of the last parsed expression */
+    protected transient Node lastRootNode = null;
+
+    /** Parser instance used for parsing expressions 
+     * @serial
+     **/
+    protected Parser parser;
+    /** Evaluator instance used for evaluating parse trees 
+     * @serial
+     **/
+    protected Evaluator evaluator;
+    /**
+     * Additional components out side the standard set
+     * @serial
+     */
+    protected List<JepComponent> additionalComponents = new ArrayList<>();
+
+
+    /** 
+     * Implicit Multiplication option 
+     * @serial
+     **/
+    protected boolean implicitMul = true;
+    /**
+     * Allow Undeclared Variables option
+     * @serial
+     **/
+    protected boolean allowUndeclared = true;
+    /**
+     * Allow Assignment option 
+     * @serial
+     **/
+    protected boolean allowAssignment = true;
+
+    /**
+     * Creates a new Jep instance using the standard components with default
+     * settings. The {@link StandardComponents} component set is used.
+     */
+    public Jep() {
+        this(new StandardComponents());
+    }
+
+    /**
+     * Creates a new Jep instance with a specific component set.
+     * @param compSet The component set to be used.
+     */
+    public Jep(ComponentSet compSet) {
+        this(compSet.getComponents());
+    }
+
+    /**
+     * Creates a new Jep instance with a set of components.
+     * If the full set of components is not specified then 
+     * default components will be used.
+     * @param components a set of components which are used to build this Jep instance
+     * @since 3.3 now varargs, default components used 
+     */
+    public Jep(JepComponent... components) {
+        for (JepComponent comp:components) {
+            setComponentInternal(comp);
+        }
+        addDefaultComponents();
+        reinitializeComponents();
+    }
+
+
+    /**
+     * Sets a single component.
+     * The <code>component</code> passed in as a parameter overrides the 
+     * active component and the active component is no longer used.
+     * <code>reinitializeComponents()</code> is called after the component is added.
+     * 
+     * @param component The component to be set.
+     */
+    public void setComponent(JepComponent component) {
+        setComponentInternal(component);
+        reinitializeComponents();
+    }
+
+
+    /**
+     * Sets one or more components for this Jep instance. The current
+     * components are overridden by the components passed in.
+     * Each component can be one of
+     * the following:
+     * <ul>
+     * <li>NumberFactory</li>
+     * <li>VariableFactory</li>
+     * <li>NodeFactory</li>
+     * <li>VariableTable</li>
+     * <li>FunctionTable</li>
+     * <li>OperatorTable</li>
+     * <li>Parser</li>
+     * <li>Evaluator</li>
+     * </ul>
+     * @param components An array of components to be set.
+     */
+    public void setComponents(JepComponent... components) {
+        for (JepComponent comp:components) {
+            setComponentInternal(comp);
+        }
+        reinitializeComponents();
+    }
+
+    /**
+     * Set the default values for components if none are specified.
+     * Called after any components specified in the constructor has been set.
+     */
+    protected void addDefaultComponents() {
+        if(this.numFac == null)
+            setComponentInternal(StandardComponents.createDefaultNumberFactory());
+        if(this.varFac == null)
+            setComponentInternal(StandardComponents.createDefaultVariableFactory());
+        if(this.nodeFac == null)
+            setComponentInternal(StandardComponents.createDefaultNodeFactory());
+        if(this.funTab == null)
+            setComponentInternal(StandardComponents.createDefaultFunctionTable());
+        if(this.varTab == null)
+            setComponentInternal(StandardComponents.createDefaultVariableTable(this.varFac));
+        if(this.opTab == null)
+            setComponentInternal(StandardComponents.createDefaultOperatorTable());
+        if(this.parser == null)
+            setComponentInternal(StandardComponents.createDefaultParser());
+        if(this.evaluator == null)
+            setComponentInternal(StandardComponents.createDefaultEvaluator());
+        if(this.pv == null)
+            setComponentInternal(StandardComponents.createDefaultPrintVisitor());
+
+    }
+
+    protected void setComponentsInternal(ComponentSet compSet) {
+        for (JepComponent comp:compSet.getComponents()) {
+            setComponentInternal(comp);
+        }
+    }
+
+    /**
+     * Identifies the type of <code>comp</code> and set the associated member 
+     * accordingly. This overrides the current component set.
+     * @param comp The component to be set.
+     */
+    protected void setComponentInternal(JepComponent comp) {
+        if(comp instanceof NumberFactory)
+            numFac = (NumberFactory) comp;
+        else if(comp instanceof VariableFactory)
+            varFac = (VariableFactory) comp;
+        else if(comp instanceof NodeFactory)
+            nodeFac = (NodeFactory) comp;
+
+        else if(comp instanceof VariableTable)
+            varTab = (VariableTable) comp;
+        else if(comp instanceof FunctionTable)
+            funTab = (FunctionTable) comp;
+        else if(comp instanceof OperatorTableI)
+            opTab = (OperatorTableI) comp;
+
+        else if(comp instanceof Parser)
+            parser = (Parser) comp;
+        else if(comp instanceof Evaluator)
+            evaluator = (Evaluator) comp;
+        else if(comp instanceof PrintVisitor)
+            pv = (PrintVisitor) comp;
+        else if(comp instanceof ComponentSubset) {
+            for(JepComponent comp2 : ((ComponentSubset) comp).getParts()) {
+        	setComponentInternal(comp2);
+            }
+        }
+        else if(comp!=null)
+            additionalComponents.add(comp);
+    }
+
+    /**
+     * Calls the <code>init</code> method of all components. This is necessary
+     * in a few cases such as after adding new operators to the configurable
+     * parser.
+     */
+    public void reinitializeComponents() {
+        numFac.init(this);
+        nodeFac.init(this);
+        varFac.init(this);
+        varTab.init(this);
+        funTab.init(this);
+        opTab.init(this);
+        parser.init(this);
+        evaluator.init(this);
+        pv.init(this);
+        for(JepComponent comp:additionalComponents)
+            comp.init(this);
+    }
+
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+        this.varTab.setVariableFactory(this.varFac);
+        reinitializeComponents();
+    }
+
+
+
+    //	============================================================================
+    //	============================================================================
+
+    /** Returns the number factory
+     * @return number factor used 
+     **/
+    public NumberFactory getNumberFactory() {return numFac;}
+    /** Returns the node factory
+     * @return node factory used 
+     **/
+    public NodeFactory getNodeFactory() {return nodeFac;}
+    /** Returns the variable factory 
+     * @return variable factory used
+     **/
+    public VariableFactory getVariableFactory() {return varFac;	}
+    /** Returns the function table
+     * @return Function table used */
+    public FunctionTable getFunctionTable() {return funTab;}
+    /** Returns the operator table
+     * @return Operator table used
+     **/
+    public OperatorTableI getOperatorTable() {return opTab;	}
+    /** Returns the variable table 
+     * @return variable table used
+     **/
+    public VariableTable getVariableTable() {return varTab;	}
+    /** Returns the parser
+     * @return parser used */
+    public Parser getParser() {	return parser;	}
+    /** Returns the evaluator
+     * @return evaluator used */
+    public Evaluator getEvaluator() { return evaluator;	}
+    /** Returns the print visitor
+     * @return print visitor used */
+    public PrintVisitor getPrintVisitor() { return pv; }
+
+    /**
+     * Returns the additional components.
+     * Any modification to the list should be followed by a call to
+     * {@link #reinitializeComponents()}. New components should be added
+     * by calling {@link #setComponent(JepComponent)}.
+     * @return the list
+     */
+    public List<JepComponent> getAdditionalComponents() {
+        return additionalComponents;
+    }
+
+    /**
+     * Return an additional component which is an instance of a particular class.
+     * @param cl The class to test for
+     * @return the first component found which is an instance or null if none found.
+     * @since 3.4.0
+     */
+    public JepComponent getAdditionalComponent(Class<?> cl) {
+        for(JepComponent comp:additionalComponents) {
+            if(cl.isInstance(comp))
+                return comp;
+        }
+        return null;
+    }
+
+    /**
+     * Adds a variable with a given name. The value is undefined. If the 
+     * variable already exists, no changes are made.
+     * 
+     * @param name		the name of the variable to be added
+     * @return			the <code>Variable</code> instance
+     */
+    public Variable addVariable(String name) {
+        return varTab.addVariable(name);
+    }
+
+    /**
+     * Adds or sets a variable with a given name and value. If a variable with the
+     * same name already exists, the value of that variable is updated.
+     * 
+     * @param name		the name of the variable to be added
+     * @param value		the value of the variable to be added
+     * @return			the <code>Variable</code> instance
+     * @throws JepException if an attempt is made to set the value of a constant variable
+     */
+    public Variable addVariable(String name, Object value) throws JepException {
+        return varTab.addVariable(name, value); 
+    }
+
+    /**
+     * Adds or sets a variable with a given name and value. If a variable with the
+     * same name already exists, the value of that variable is updated.
+     * 
+     * @param name		the name of the variable to be added
+     * @param value		the value of the variable to be added
+     * @return			the <code>Variable</code> instance, return null if error setting variable
+     * @since Jep 3.5
+     */
+	public Variable setVariable(String name, Object value) {
+		try {
+			return addVariable(name,value);
+		} catch (JepException e) {
+//			System.out.println(e.toString());
+			return null;
+		}
+	}
+
+    /**
+     * Adds or sets a double variable with a given name and value. If a variable with the
+     * same name already exists, the value of that variable is updated.
+     * 
+     * @param name		the name of the variable to be added
+     * @param value		the value of the variable to be added
+     * @return			the <code>Variable</code> instance
+     * @throws JepException if an attempt is made to set the value of a constant variable
+     */
+    public Variable addVariable(String name, double value) throws JepException {
+        return addVariable(name, new Double(value));
+    }
+
+    /**
+     * Adds or sets a complex variable with a given name and value. If a variable with the
+     * same name already exists, the value of that variable is updated.
+     * 
+     * @param name		the name of the variable to be added
+     * @param re		the real component of the variable to be added
+     * @param im		the imaginary component of the variable to be added
+     * @return			the <code>Variable</code> instance
+     * @throws JepException if an attempt is made to set the value of a constant variable
+     */
+    public Variable addVariable(String name, double re, double im) throws JepException {
+        return varTab.addVariable(name, new Complex(re, im));
+    }
+
+    /**
+     * Add a constant: a variable who's value cannot be changed.
+     * @param name constants name
+     * @param value its value
+     * @return the corresponding Variable
+     * @throws JepException if a constant variable already exists
+     */
+    public Variable addConstant(String name, Object value) throws JepException {
+        return varTab.addConstant(name, value);
+    }
+
+    /**
+     * Tries to add a constant. 
+     * @param name name of constant
+     * @param value value of constant
+     * @return true if successfully added or a constant with same name and value already exists. false if the constant has a different value
+     */
+    public boolean tryAddConstant(String name, Object value) {
+        Variable var = varTab.getVariable(name);
+        if(var!=null) {
+            Object cur = var.getValue();
+            return value.equals(cur);
+        }
+        try
+        {
+            varTab.addConstant(name, value);
+            return true;
+        }
+        catch(JepException e) {
+            return false;
+        }
+    }
+    /**
+     * Adds the constants pi and e to the parser. The values are added as the 
+     * Math.PI and Math.E values.
+     * 
+     * @return		true if successful, false otherwise
+     */
+    public boolean addStandardConstants() {
+        //add constants to Symbol Table
+        try {
+            varTab.addConstant("pi", numFac.createNumber(Math.PI)); //$NON-NLS-1$
+            varTab.addConstant("e", numFac.createNumber(Math.E)); //$NON-NLS-1$
+        } catch (ParseException e) {
+            return false;
+        } catch (JepException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns the <code>Variable</code> instance of the variable
+     * <code>name</code>. If the variable has not been added, null is returned.
+     * @param name	the name of the variable
+     * @return		the <code>Variable</code> instance, or null if the variable
+     *              has not been added.
+     */
+    public Variable getVariable(String name) {
+        return varTab.getVariable(name);
+    }
+
+    /**
+     * Returns the value of the variable <code>name</code>. If the variable has 
+     * not been added, or if it's value is <code>null</code>, <code>null</code> is returned.
+     * @param name	the name of the variable
+     * @return		the value of the variable, or null if the variable
+     *              has not been added or has the value null.
+     */
+    public Object getVariableValue(String name) {
+        Variable variable = varTab.getVariable(name);
+        return ( variable != null ) ? variable.getValue() : null;
+    }
+
+    /**
+     * Sets whether assignment equations like <code>y=x+1</code> are allowed.
+     * The default is true (assignment allowed).
+     * @param value true is assignment equations are allowed, false otherwise
+     */
+    public void setAllowAssignment(boolean value) {
+        allowAssignment = value;
+        this.opTab.getAssign().setFlag(Operator.NOT_IN_PARSER, !value);
+        this.reinitializeComponents();
+    }
+
+    /**
+     * Whether assignment equation <code>y=x+1</code> equations are allowed.
+     * @return true is assignment equations are allowed, false otherwise
+     */
+    public boolean getAllowAssignment() { return allowAssignment; }
+
+    /**
+     * Sets the value for the undeclared variables option. If this option
+     * is set to true, expressions containing variables that were not
+     * previously added to Jep will be automatically be added while parsing,
+     * and initialized to 0. Note this only affects the parsing stage, 
+     * EvaluationException will still be thrown when trying to evaluate a variable 
+     * with an undefined value. 
+     * <p>
+     * If this option is set to false, variables that were not previously
+     * added to Jep will produce an ParseException while parsing.
+     * <p>
+     * The default value is true.
+     * @param value The boolean option for allowing undeclared variables.
+     */
+    public void setAllowUndeclared(boolean value) {
+        allowUndeclared = value;
+    }
+
+    /**
+     * Returns the value of the allowUndeclared option.
+     * @return True if the allowUndeclared option is enabled. False otherwise.
+     */
+    public boolean getAllowUndeclared() { return allowUndeclared; }
+
+    /**
+     * Sets the value of the implicit multiplication option.
+     * If this option is set to true before parsing, implicit multiplication
+     * will be allowed. That means that an expression such as
+     * <pre>"1 2"</pre> is valid and is interpreted as <pre>"1*2"</pre>.
+     * <p>
+     * The default value is true.
+     * @param value The boolean implicit multiplication option.
+     */
+    public void setImplicitMul(boolean value) {
+        implicitMul = value;
+    }
+
+    /**
+     * Returns the default value used for new variables. 
+     * @return the value
+     */
+    public Object getDefaultValue() {
+        return varFac.getDefaultValue();
+    }
+
+    /**
+     * Sets the default value used for new variables.
+     * If the value is null (the default) then exceptions 
+     * will be thrown when trying to evaluate the variables which do not have values set.
+     * @param defaultValue value new variables have if not explicitly given
+     * @see com.singularsys.jep.standard.StandardEvaluator#setTrapNullValues(boolean)
+     */
+    public void setDefaultValue(Object defaultValue) {
+        varFac.setDefaultValue(defaultValue);
+    }
+
+    /**
+     * Returns the value of the implicit multiplication option.
+     * @return True if the implicit multiplication option is enabled. False otherwise.
+     */
+    public boolean getImplicitMul() { return implicitMul; }
+
+    /**
+     * Adds a function to the parser.
+     * @param name	the name of the function
+     * @param pfmc	the function class instance to be used to evaluate the function
+     * @return		null unless there was a previous function with the same name in which case return the previous pfmc
+     */
+    public PostfixMathCommandI addFunction(String name, PostfixMathCommandI pfmc) {
+        return funTab.addFunction(name, pfmc);
+    }
+
+    /**
+     * Returns the root node of the last successfully parsed expression
+     * @return the root node of the last successfully parsed expression
+     */
+    public Node getLastRootNode() {
+        return lastRootNode;
+    }
+
+
+    //	============================================================================
+    //  Parsing methods
+    //	============================================================================
+
+    /**
+     * Parses the input from a Reader.
+     * @param reader the input reader
+     * @return the root node of the parse tree
+     * @throws ParseException if there is a syntax error in expression
+     */
+    public Node parse(Reader reader) throws ParseException {
+        /*trialcode
+		if (pcount++ > 50) throw new ParseException("Trial version limitation: Number of parse calls exceeded");
+trialcode*/
+        lastRootNode = parser.parse(reader);
+        return lastRootNode;
+    }
+
+    /**
+     * Parses a string.
+     * @param str the input string
+     * @return the root node of the parse tree
+     * @throws ParseException if there is a syntax error in expression
+     */
+    public Node parse(String str) throws ParseException {
+        return parse(new StringReader(str));
+    }
+
+    /**
+     * Initialises the parser for parsing a string with multiple expressions.
+     * This method does not perform any parsing. Use continueParsing to parse
+     * the first expression and subsequent expressions from the input.
+     * @param str String containing a sequence of expressions separated by semi-colons.
+     * @see #continueParsing
+     */
+    public void initMultiParse(String str) {
+        parser.restart(new java.io.StringReader(str));
+    }
+
+    /**
+     * Initialises the parser with a Reader for parsing with multiple expressions.
+     * This method does not perform any parsing. Use continueParsing to parse
+     * the first expression and subsequent expressions from the input.
+     * @param reader Reader from which equations separated by semi-colons will be read.
+     * @see #continueParsing
+     */
+    public void initMultiParse(Reader reader) {
+        parser.restart(reader);
+    }
+
+    /**
+     * Continue parsing without re-initialising the stream. This requires 
+     * initMultiParse to be called first.
+     * Allows re-entrance of parser so that strings like
+     * "x=1; y=2; z=3;" can be parsed.
+     * When a semicolon is encountered parsing finishes leaving the rest of 
+     * the string unparsed.
+     * Parsing can be resumed from the current position by using this method.
+     * For example
+     * <pre>
+     * Jep j = new Jep();
+     * j.initMultiParse("x=1;y=2; z=3;");
+     * Node node;
+     * try {
+     * while((node = j.continueParsing())!=null) {
+     *    j.println(node);
+     * } }catch(ParseException e) {}
+     * </pre>
+     * Empty equations such as "x=1;;y=2" are silently ignored, in this case 
+     * the second call will return the node representing y=2. 
+     * @return top node of equation parsed to date or null at EOF.
+     * @throws ParseException if there is a syntax error in expression
+     * @see #initMultiParse(String)
+     */
+    public Node continueParsing() throws ParseException {
+        /*trialcode
+		if (pcount++ > 50) throw new ParseException("Trial version limitation: Number of parse calls exceeded");
+trialcode*/
+        return parser.continueParse();
+    }
+
+
+    //	============================================================================
+    //  Evaluation methods
+    //	============================================================================
+
+    /**
+     * Evaluates the most recently parsed expression and returns the result
+     * as a double.
+     * @return Returns the value of the expression tree. If node is null, null
+     * is returned.
+     * @throws EvaluationException if an error occurs while evaluating or
+     * if the returned data type can not be converted to a <code>double</code>
+     * number.
+     */
+    public double evaluateD() throws EvaluationException {
+        Object result = evaluate(lastRootNode);
+
+        if (result instanceof Number) {
+            return ((Number)result).doubleValue();
+        }
+        if (result instanceof Boolean) {
+            return ((Boolean)result).booleanValue() ? 1.0 : 0.0;
+        }
+        throw new EvaluationException(MessageFormat.format(JepMessages.getString("Jep.ResultCouldNotBeConvertedToDoubleType"),result.toString())); //$NON-NLS-1$
+    }
+
+    /**
+     * Evaluates the most recently parsed expression.
+     * @return Returns the value of the expression tree. If node is null, null
+     * is returned.
+     * @throws EvaluationException if an error occurs
+     */
+    public Object evaluate() throws EvaluationException {
+        return evaluate(lastRootNode);
+    }
+
+    /**
+     * Evaluates the expression tree pointed to by the node parameter.
+     * @param node root of expression tree to be evaluated
+     * @return Returns the value of the expression tree. If node is null, null
+     * is returned.
+     * @throws EvaluationException if an error occurs
+     */
+    public Object evaluate(Node node) throws EvaluationException {
+        if (node!=null) {
+            Object result = evaluator.evaluate(node);
+            return result;			
+        }
+		return null;
+    }
+
+    //	============================================================================
+    //  Print methods
+    //	============================================================================
+
+    /**
+     * Print an expression to a given stream.
+     * @param node root node of the expression to print
+     * @param out stream to print to
+     */
+    public void print(Node node, PrintStream out) {
+        pv.print(node, out);
+    }
+
+    /**
+     * Print an expression to System.out.
+     * @param node root node of the expression to print
+     */
+    public void print(Node node) {
+        pv.print(node);
+    }
+
+    /**
+     * Print the last parsed expression to System.out.
+     */
+    public void print() {
+        pv.print(this.lastRootNode);
+    }
+
+    /**
+     * Print an expression to a given stream with a newline.
+     * @param node root node of the expression to print
+     * @param out stream to print to
+     */
+    public void println(Node node, PrintStream out) {
+        pv.println(node, out);
+    }
+
+    /**
+     * Print an expression to System.out with a new line.
+     * @param node root node of the expression to print
+     */
+    public void println(Node node) {
+        pv.println(node);
+    }
+
+    /**
+     * Print the last parsed expression to System.out with a new line.
+     */
+    public void println() {
+        pv.println(this.lastRootNode);
+    }
+
+    /**
+     * Returns a string representation of an expression.
+     * @param node root node of the expression.
+     * @return string representation
+     */
+    public String toString(Node node) {
+        return pv.toString(node);
+    }
+
+    /**
+     * Returns a string representation of the last expression parsed.
+     * @return string representation
+     */
+    public String rootNodeToString() {
+        return pv.toString(this.lastRootNode);
+    }
+
+}

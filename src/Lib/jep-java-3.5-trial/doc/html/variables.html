@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Variables</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1><a  id="top"></a>Variables</h1>
+  <ul>
+    <li><a href="#basics">Basics</a></li>
+    <li><a href="#undeclared">Undeclared and undefined variables</a></li>
+    <li><a href="#constants">Constants</a></li>
+    <li><a href="#assignment">Assignment</a></li>
+    <li><a href="#obtainingalist">Obtaining a list of variables</a></li>
+    <li><a href="#observers">Observers for variables</a></li>
+  </ul>
+  <h2><a id="basics"></a>Basics</h2>
+  <p>Variables are represented by the 
+  <a href="../javadoc/com/singularsys/jep/Variable.html">Variable</a> class and
+  stored in a 
+  <a href="../javadoc/com/singularsys/jep/VariableTable.html">VariableTable</a>.
+  The value of a variable can be set using</p>
+  <pre class=codebox><a href="../javadoc/com/singularsys/jep/Jep.html#addVariable-java.lang.String-java.lang.Object-">Jep.addVariable(String name,Object val)</a></pre>
+  <p>and retrieved with</p>
+  <pre class=codebox><a href="../javadoc/com/singularsys/jep/Jep.html#getVariableValue-java.lang.String-">Object Jep.getVariableValue(String name)</a></pre>
+  <p>The <code>addVariable()</code> method can also be used to change the value of existing variables.
+  For <code>double</code> values, use
+the <a href="../javadoc/com/singularsys/jep/Jep.html#addVariable-java.lang.String-double-">Jep.addVariable(String, double)</a>
+method and for complex numbers, use the 
+<a href="../javadoc/com/singularsys/jep/Jep.html#addVariable-java.lang.String-double-double-">Jep.addVariable(String, double, double)</a>
+method.
+A further method, <a href="../javadoc/com/singularsys/jep/Jep.html#getVariable-java.lang.String-">getVariable(String)</a>, 
+returns the Variable object. This class allows variables to be observed and offers a marginally faster method for getting and setting variable values.</p>
+
+   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a id="undeclared"></a>Undeclared and undefined variables</h2>
+<p>  
+  During parsing, the parser looks up whether variables exists. The
+<a href="../javadoc/com/singularsys/jep/Jep.html#setAllowUndeclared(boolean)">Jep.setAllowUndeclared(boolean flag)</a>
+sets the behaviour for undeclared variables:</p>
+  <ol>
+    <li><b>Allow undeclared variables (default):</b> undeclared variables will be 
+    added to the VariableTable while parsing an expression. </li>
+    <li><b>Do not allow undeclared variables:</b> In this case it is 
+      necessary to add a variable using <code>addVariable()</code> methods before parsing.
+      A ParseException will be thrown if an undeclared variable is encountered. This option is useful
+      if you wish to restrict the variables which can appear in an expression.</li>
+   </ol>
+
+  <p>
+  During evaluation the value of a variable will be retrieved. If the value is undefined
+  (<code>null</code>),
+  then an EvaluationException will be thrown. Null values will occur if the variable values have not
+  been set using <code>addVariable()</code>. In particular this will occur if <code>allowUndeclared</code> is true
+  and a variable is created while parsing. This behaviour can be changed
+  by calling the
+  <code>StandardEvaluator.setTrapNullValues(boolean flag)</code> method.
+  The <code>Jep.setDefaultValue(Object)</code> method can be used to set the default value variables.  </p>
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a id="constants"></a>Constants</h2>
+<p>
+Variables can be defined as being constants, whos values is fixed. By default Jep defines the constants
+<code>e</code> (2.718281828459045),
+<code>pi</code> (3.141592653589793),
+<code>i</code> (Complex number i) and boolean constants <code>true</code> and <code>false</code>.
+</p>
+
+<p>To add a constant use</p>
+           <pre class="codebox">jep.addConstant("tau", (1+Math.sqrt(5))/2.);</pre>
+
+<p>To remove a constant use</p>
+           <pre class="codebox">jep.getVariableTable().remove("e");</pre>
+
+<p>
+To initilise Jep with no constants use the VariableTable component</p>
+  <pre class="codebox">Jep jep = new Jep(new VariableTable());</pre>
+<p>Individual variables have an isConstant field, which can be accessed via the <code>isConstant()</code> method and set via <code>setIsConstant(boolean b)</code>. 
+If the field is set then variable value cannot be changed.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a id="assignment"></a>Assignment</h2>
+  <p> Assignment allows the values of variables to be set by using the <code>=</code> 
+    operator in equations so it is possible to assign values with expressions 
+    like</p>
+  <pre class="codebox">x = 3</pre>
+  <p>then use the assigned values in an expression such as</p>
+  <pre class="codebox">y = x^2</pre>
+  <p>and <code>y</code> will have the value 9. Assignment is enabled by default. To disable assignment facilities, the <a href="../javadoc/com/singularsys/jep/Jep.html#setAllowAssignment(boolean)">setAllowAssignment(boolean)</a> 
+    method of the main Jep object should be called. Calling <a href="../javadoc/com/singularsys/jep/Jep.html#setAllowUndeclared(boolean)" target="_blank">setAllowUndeclared(true)</a> 
+    is required for Jep to parse the assignment equations.</p>
+  <p><strong>Important:</strong> It is necessary to call the <a href="../javadoc/com/singularsys/jep/Jep.html#evaluate()">evaluate()</a> method after parsing for the variable value to be assigned. </p>
+<pre class="codebox"><span class="comment">// standard initialisation</span><br />Jep j = new Jep();<br />j.setAllowUndeclared(true);<br /><br /><span class="comment">// switch assignment facilities on</span><br />j.setAllowAssignment(true);<br /><br /><span class="comment">// parse assignment equations</span><br />try {j.parse(&quot;x=3&quot;);} catch (ParseException e) {}<br /><span class="comment">// evaluate it - no need to save the value returned</span><br />try {j.evaluate();} catch (EvaluationException e) {}<br /><span class="comment">
+// parse a second equation</span><br />try {j.parse(&quot;y=2&quot;);} catch (ParseException e) {}
+try {j.evaluate();} catch (EvaluationException e) {}
+<br /><span class="comment">// an equation involving the above variables</span>
+try {j.parse(&quot;x^y&quot;);} catch (ParseException e) {}<br />try {
+	Object val3 = j.evaluate();
+	System.out.println(&quot;Value is &quot; + val3);
+} catch (EvaluationException e) {}</pre><!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a id="obtainingalist"></a>Obtaining a list of variables</h2>
+  <p>If you parse an expression with an unknown set of variables (when the allowUndeclared option is enabled), you may need to know which variables occurred in the expression. There are two ways of obtaining a list of the variables.</p>
+  <p>One approach is to use the <a href="../javadoc/com/singularsys/jep/Jep.html#getVariableTable()" target="_blank">getVariableTable</a> method. With the returned variable table you can then check its contents to see which variables  have been added while parsing. 
+    In particular the <a href="../javadoc/com/singularsys/jep/VariableTable.html#getVariables()">VariableTable.getVariables()</a> returns a list of
+  all variables. The VariableTable's <code>toString()</code> will produce a printable list.</p>
+  <p>The second approach is to use the <a href="../javadoc/com/singularsys/jep/walkers/TreeAnalyzer.html">TreeAnalyzer</a> class to examine an expression tree after parsing an expression. See the JavaDoc documentation for more information on how to use it.</p><!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2><a id="observers"></a>Observers for variables</h2>
+  <p> The Variable class implements the Observer/Observable pattern. 
+    This allows objects to be informed whenever variable values change. To register a class as an observer of a variable, use the <code>Variable.addObserver(Observer)</code> methods. 
+    The VariableTable can also be observed to check for the addition of new variables, see
+    <a href="../javadoc/com/singularsys/jep/misc/VariableTableObserver.html">VariableTableObserver</a>
+    for a class to facilitate observing the VariableTable and its Variables.</p>
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

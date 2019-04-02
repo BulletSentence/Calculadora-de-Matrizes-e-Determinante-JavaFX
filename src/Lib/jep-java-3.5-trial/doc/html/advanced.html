@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Other Advanced features</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+
+
+<h1>Other advanced features</h1>
+
+<p>The <a href="./javadoc/com/singularsys/jep/misc/package-summary.html">com.singularsys.jep.misc</a> 
+and <a href="../javadoc/com/singularsys/jep/walkers/package-summary.html">com.singularsys.jep.walkers</a> packages 
+contain various other optional advanced features.</p>
+
+<h2>Bitwise and java operators</h2>
+<p>
+The <a href="../javadoc/com/singularsys/jep/misc/bitwise/BitwiseOperatorTable.html">BitwiseOperatorTable</a>
+adds a set of bitwise operators: 
+bitwise AND <code>  a &amp; b</code>,
+bitwise OR <code>a | b</code>,
+1's complement <code> ~a</code>,
+XOR <code> a ^ b</code>,
+Left shift <code>a &gt;&gt; b</code>,
+Right shift <code>a &lt;&lt; b</code>
+Right shift with zero extension: <code>a &lt;&lt;&lt; b</code>
+</p>
+
+<p>The <a href="../javadoc/com/singularsys/jep/misc/javaops/JavaOperatorTable.html">JavaOperatorTable</a>
+adds the  bitwise operators and the full set of java operators <code>x?y:z</code>, 
+<code>++x</code>, <code>--x</code>, <code>x++</code>, <code>x--</code>,
+<code>x+=y</code>, <code>x-=y</code>, <code>x*=y</code>, <code>x/=y</code>,
+<code>x%=y</code>, <code>x&amp;=y</code>, <code>x|=y</code>, <code>x^=y</code>,
+<code>x&lt;&lt;=y</code>,  <code>x&gt;&gt;=y</code>,  <code>x&lt;&lt;&lt;=y</code>.  
+</p>
+  
+<h2>Line Numbering</h2>
+<p>The <a href="../javadoc/com/singularsys/jep/misc/lineNumbering/package-summary.html">com.singularsys.jep.misc.lineNumbering</a>
+package adds to add line and column number information to nodes which can be used for error detection.
+  It can be set up with:
+</p>
+
+<pre>Jep jep = new Jep(
+  new StandardConfigurableParser(),
+  new LineNumberingNodeFactory(),
+  new LineNumberingShuntingYard.LineNumberGrammarParserFactory());
+</pre>
+
+<p>
+The line and column number of each node can be found with</p>
+<pre>
+int line = (Integer) node.getHook(LineNumberingNodeFactory.Numbering.LINENUMBER);
+int col = (Integer) node.getHook(LineNumberingNodeFactory.Numbering.COLUMNNUMBER);
+</pre>
+
+<h2>Null Wrapped Functions</h2>
+
+<p>The <a href="../javadoc/com/singularsys/jep/misc/nullwrapper/package-summary.html">com.singularsys.jep.misc.nullwrapper</a> package
+allows functions to handle <code>null</code> in the same way as SQL's NULL. <code>null</code>
+will be treated as unknown and most operations involving <code>null</code> will return <code>null</code>. So <code>sin(null)</code>
+returns null and <code>null + 5</code> returns <code>null</code>. The logical and and or operations follow slightly different rules
+with <code>null || true</code> giving <code>true</code> and <code>null &amp;&amp; false</code> giving <code>false</code>.
+</p>
+<p>The package works by using the Decorator pattern 
+which takes and existing <code>PostfixMathCommand</code> and wraps it
+in another class which handles <code>null</code> correctly. The
+<code>NullWrappedFunctionTable</code> and <code>NullWrappedOperatorTable</code>
+take existing <code>FunctionTable</code> and <code>OperatorTable</code> and wrap each
+function and operator in them.</p>
+<p>To set up this functionality use</p>
+<pre>
+jep.setComponent(new NullWrappedOperatorTable((OperatorTable2) jep.getOperatorTable(),true));
+jep.setComponent(new NullWrappedFunctionTable(jep.getFunctionTable()));
+jep.setComponent(new StandardConfigurableParser());
+((FastEvaluator) jep.getEvaluator()).setTrapNullValues(false);
+</pre>
+<p>This also adds a null-safe equals operator <code>&lt;=&gt;</code> for which <code>null&lt;=&gt;null</code>
+is <code>true</code>. If you do not need this operator you can use the standard parser
+and omit thirds line setting the parser.</p>
+
+<h2>Tree traversal</h2>
+<p>
+Various methods for tree traversal provides by the <code>com.singularsys.jep.walkers</code> package 
+are discussed in the <a href="manipulating.html#WALKERS">manipulating expressions</a> page.
+These include: the <a href="../javadoc/com/singularsys/jep/walkers/TreeAnalyzer.html">TreeAnalyzer</a>
+which can calculate statistics about an expression, and
+the <a href="../javadoc/com/singularsys/jep/walkers/SubstitutionVisitor.html">SubstitutionVisitor</a>
+which can substitute one expression into another.
+</p>
+ 
+<h2>Functions</h2>
+<p>
+The <a href="../javadoc/com/singularsys/jep/misc/functions/package-summary.html">com.singularsys.jep.misc.functions</a>
+packages contain various other functions, see <a href="functions.html#optional">Optional functions</a> for details.
+</p>
+  
+
+<h2>Bound variables</h2>
+<p>
+The <a href="../javadoc/com/singularsys/jep/misc/boundvariable/package-summary.html">com.singularsys.jep.misc.boundvariable</a>
+packages allows a direct binding between Jep variables and java objects so that when the jep variable is changed 
+the corresponding object field also changed and vice versa.
+</p>
+<p>The simplest way to use this is to use
+the <a href="../javadoc/com/singularsys/jep/misc/boundvariable/FieldVariableBinding.html">FieldVariableBinding</a>
+to bind a jep variable to a specific field of an object using the reflection mechanism. First
+set up an object with publically accessable fields.</p>
+<pre class="codebox">
+public class MyObj {
+    public Double a;
+    public double b;
+}
+</pre>
+<p>Then set up Jep using the
+<a href="../javadoc/com/singularsys/jep/misc/boundvariable/BoundVariableFactory.html">BoundVariableFactory</a>
+</p>
+<pre class="codebox">
+// Create Jep with a variable factory which allows bound variables
+Jep jep = new Jep(new BoundVariableFactory());
+// Create an object, with a Double field a and a double field b
+MyObj obj = new MyObj();
+obj.a = new Double(3.0);
+obj.b = 5.0;
+// Create binding objects for the two fields
+FieldVariableBinding bindA = new FieldVariableBinding(obj,"a");
+FieldVariableBinding bindB = new FieldVariableBinding(obj,"b");
+// Create variables bound to these fields
+jep.addVariable("a", bindA);
+jep.addVariable("a", bindB);
+</pre>
+<p>
+These variables can then be used as normal in Jep, and changes will affect
+the field values.</p>
+<pre class="codebox">
+// Parse an equation using these values
+Node n = jep.parse("b=4*a");
+Object res = jep.evaluate(n);
+System.out.println("Result is "+res+" value of field b is "+obj.b);
+
+// setting the value of objects field alters the jep value
+obj.a = 7.0;
+res = jep.evaluate(n);
+System.out.println("Result is "+res+" value of field b is "+obj.b);
+</pre>
+<p>The 
+<a href="../javadoc/com/singularsys/jep/misc/boundvariable/MutableDouble.html">MutableDouble</a>
+provides a simple class with a single Double value which can be bound to a Jep variable.
+</p>
+<p>Other way of mapping Jep variables to java objects can be created
+by implementing the 
+<a href="../javadoc/com/singularsys/jep/misc/boundvariable/VariableBinding.html">VariableBinding</a>
+interface and the 
+<a href="../javadoc/com/singularsys/jep/misc/boundvariable/VariableBindingMapper.html">VariableBindingMapper</a>
+interface allows variable names to be translated to specific variables.
+For instance the 
+<a href="../javadoc/com/singularsys/jep/misc/boundvariable/ChainedObjectVariableBindingMapper.html">ChainedObjectVariableBindingMapper</a>
+creates VariableBinding objects by translating the variable name into a chain of object references
+so "foo.a.b" might be translated into a reference to field "b" of the object at field "a" of an object. 
+</p>
+ 
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>
+
+  

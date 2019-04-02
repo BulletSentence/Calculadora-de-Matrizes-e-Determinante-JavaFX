@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Components</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1>Component Architecture</h1>
+  <p>With Jep 3.0, a new component architecture was introduced. It allows pluggable 
+    components, giving tremendous flexibility for customizing Jep. A total of 9 components are employed, as shown below.</p>
+  <ul class="blocks">
+    <li style="background-color:#FFDDDD">Parser</li>
+    <li style="background-color:#FFFFDD">Evaluator</li>
+    <li style="background-color:#DDFFFF">VariableTable</li>
+    <li style="background-color:#DDFFFF">FunctionTable</li>
+    <li style="background-color:#DDFFFF">OperatorTable</li>
+    <li style="background-color:#DDFFDD">VariableFactory</li>
+    <li style="background-color:#DDFFDD">NumberFactory</li>
+    <li style="background-color:#DDFFDD">NodeFactory</li>
+    <li style="background-color:#DDDDFF">PrintVisitor</li>
+  </ul>
+  <p>For each of the components you can either use a built-in implementation, or you can create your own implementation.</p>
+  <p>The roles of these components are:</p>
+  <ul>
+  <li><a href="../javadoc/com/singularsys/jep/Parser.html">Parser</a> - parses expressions.</li>
+  <li><a href="../javadoc/com/singularsys/jep/Evaluator.html">Evaluator</a> - evaluates expressions.</li>
+  <li><a href="../javadoc/com/singularsys/jep/VariableTable.html">VariableTable</a> - stores the set of variables.</li>
+  <li><a href="../javadoc/com/singularsys/jep/FunctionTable.html">FunctionTable</a> - stores the sets of known functions.</li>
+  <li><a href="../javadoc/com/singularsys/jep/OperatorTable.html">OperatorTable</a> - stores the set of operators.</li>
+  <li><a href="../javadoc/com/singularsys/jep/VariableFactory.html">VariableFactory</a> - creates new variables.</li>
+  <li><a href="../javadoc/com/singularsys/jep/NumberFactory.html">NumberFactory</a> - creates objects representing numbers (typically Double) from string representations.</li>
+  <li><a href="../javadoc/com/singularsys/jep/NodeFactory.html">NodeFactory</a> - creates nodes in the parse tree.</li>
+  <li><a href="../javadoc/com/singularsys/jep/PrintVisitor.html">PrintVisitor</a> - prints equations.</li>
+  </ul>
+ <p>A set of components can be bundled together in a 
+<a href="../javadoc/com/singularsys/jep/ComponentSet.html">ComponentSet</a>
+and the 
+<a href="../javadoc/com/singularsys/jep/Jep.html#Jep(com.singularsys.jep.ComponentSet)">Jep(ComponentSet cs)</a>
+constructor used to create a Jep instance with a given set. Individual components can
+be set using
+<a href="../javadoc/com/singularsys/jep/Jep.html#setComponent(com.singularsys.jep.JepComponent)">jep.setComponent(JepComponent comp)</a>.
+</p>
+ 
+  <h2>Built-in components</h2>
+  <p>Jep comes with many components built-in. When creating a <code>Jep</code> instance using the default constructor, the <code>StandardComponents</code> set is loaded. The standard components include the <a href="../javadoc/com/singularsys/jep/parser/StandardParser.html">StandardParser</a> and the <a href="../javadoc/com/singularsys/jep/standard/FastEvaluator.html">FastEvaluator</a>. In addition to those, the <a href="confparser.html">ConfigurableParser</a> and the <a href="../javadoc/com/singularsys/jep/reals/RealEvaluator.html">RealEvaluator</a> are also available. The following listing gives an overview of the components available in Jep 3. </p>
+  <p><b>StandardComponents</b> (the default component set) <br /> 
+  <a href="../javadoc/com/singularsys/jep/standard/StandardComponents.html">com.singularsys.jep.standard.StandardComponents</a></p>
+  <ul>
+    <li><strong><a href="../javadoc/com/singularsys/jep/parser/StandardParser.html">StandardParser</a></strong> (JavaCC generated parser)</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/standard/FastEvaluator.html">FastEvaluator</a></strong></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/VariableFactory.html">VariableFactory</a></strong></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/standard/DoubleNumberFactory.html">DoubleNumberFactory</a></strong></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/NodeFactory.html">NodeFactory</a></strong></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/standard/StandardVariableTable.html">StandardVariableTable</a></strong></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/standard/StandardFunctionTable.html">StandardFunctionTable</a></strong></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/standard/StandardOperatorTable.html">StandardOperatorTable</a></strong></li>
+  </ul>
+  <p><b>BigDecimalComponents</b> (see <a href="bigdecimal.html">Big Decimals</a>)</p>
+  <ul>
+    <li><strong><a href="../javadoc/com/singularsys/jep/bigdecimal/BigDecFunctionTable.html">BigDecFunctionTable</a></strong> (initializes a set a functions that can handle BigDecimals) </li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/bigdecimal/BigDecNumberFactory.html">BigDecNumberFactory</a></strong> (creates BigDecimal numbers) </li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/bigdecimal/BigDecOperatorTable.html">BigDecOperatorTable</a></strong> (initializes BigDecimal operators) </li>
+  </ul>
+  <p><strong>Other components</strong></p>
+  <ul>
+    <li><strong><a href="../javadoc/com/singularsys/jep/reals/RealEvaluator.html">RealEvaluator</a></strong> (allows fast evaluation of <code>double</code> arithmetic and functions)</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/reals/RealComponentSet.html">RealComponentSet</a></strong> (functions never return complex numbers and the variable i is not defined) includes:
+    <ul>
+    <li><strong><a href="../javadoc/com/singularsys/jep/reals/RealFunctionTable.html">RealFunctionTable</a></strong> (functions don't return complex values)</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/reals/RealVariableTable.html">RealVariableTable</a></strong> (has constants  <code>pi, e, true, false</code> but not the complex number <code>i</code>.)</li>
+    </ul></li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/standard/StandardEvaluator.html">StandardEvaluator</a></strong> (the pre-v3.3 evaluator, kept for compatibility)</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/walkers/PostfixEvaluator.html">PostfixEvaluator</a></strong> (traverses trees without using recursion, for very lage expressions) </li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/CaseInsensitiveFunctionTable.html">CaseInsensitiveFunctionTable</a></strong> (a function table which is case-insensitive)</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/CaseInsensitiveVariableTable.html">CaseInsensitiveVariableTable</a></strong> (a variable table which is case-insensitive)</li>
+    <li><strong><a href="confparser.html">Configurable Parser</a></strong> (for customizable syntax) </li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/NullParser.html">NullParser</a></strong> (a do-nothing parser)</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/nullwrapper/NullWrappedFunctionTable.html">NullWrappedFunctionTable</a></strong> A function table wherA function table where every function treats null like SQL's NULL.</li>
+
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/bitwise/BitwiseOperatorTable.html">BitwiseOperatorTable</a></strong> An operator table which adds bitwise operators <code>a|b</code> <code>a>>b</code> etc.</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/javaops/JavaOperatorTable.html">JavaOperatorTable</a></strong> A operator table which adds bitwise operators and the full set of java operators <code>++x</code>, <code>x?y:z</code> etc.</li>
+
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/lineNumbering/LineNumberingNodeFactory.html">LineNumberingNodeFactory</a></strong> A node factory which stores line number information.</li>
+    <li><strong><a href="../javadoc/com/singularsys/jep/misc/lineNumbering/LineNumberingShuntingYard.html#LineNumberGrammarParserFactory">LineNumberingShuntingYard.LineNumberGrammarParserFactory</a></strong> Part of the configurable parser which adds line number info.</li>
+    
+  </ul>
+  <h2>Custom components</h2>
+  <p>
+  The architecture also allows for new custom components can be loaded. These should implement the appropriate interface or extend the appropriate class. 
+  Two methods are common to all components (see <a href="../javadoc/com/singularsys/jep/JepComponent.html">JepComponent</a>):  </p>
+  <ul>
+  <li><code>void init(Jep jep)</code> this is called after the Jep instance is constructed or when a component is changed
+  and is used to inform all active components about the configuration. A do nothing method is typical.</li>
+  <li><code>public JepComponent getLightWeightInstance()</code> in multi-threaded environments 
+  with multiple Jep instances some components can be shared, but other need a separate instance per thread.
+  This method returns an appropriate instance, which can be <code>this</code>, <code>null</code> or a new instance. See
+  <a href="serialization.html">Serialization</a> for details.
+  </li>
+  </ul>
+  
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

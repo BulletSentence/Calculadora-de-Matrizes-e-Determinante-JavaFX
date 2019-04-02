@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Localization</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+
+<h1>Localization</h1>
+<p>
+In Jep 3.5 all error messages are externalized using the standard Java Internationalization mechanism.
+See <a href="http://download.oracle.com/javase/tutorial/i18n/TOC.html">Java Trail: Internationalization</a> for
+of an overview.
+</p>
+<p>
+The default messages are contained in the   
+<code>com/singularsys/jep/messages.properties</code>
+file which can be customised. A copy of this file can be found here:
+<a href="messages.properties">messages.properties</a>.
+</p>
+<h3>Custom messages file</h3>
+<p>A localized version of the messages file 
+can be specified for a given language and country  A typical
+copy of the properties file might be</p>
+<pre class="codebox">
+FunctionRequiresNArgumentsFoundN=Fonction «%s» nécessite %d arguments, a trouvé %d.
+functions.IllegalParameterException.UnknownFunction=Fonction inconnue
+functions.IllegalParameterException.IllegalArgument=: argument illégal:
+functions.IllegalParameterException.IllegalArguments=: arguments illégal: 
+functions.IllegalParameterException.Comma=, 
+functions.IllegalParameterException.Expected=\ attendus %s
+functions.IllegalParameterException.ExpectedMsg=\ attendus %s
+functions.IllegalParameterException.ActualValueClass=\ %s[%s]
+functions.IllegalParameterException.ArgumentNumber=,\ numéro %d argument.</pre>
+<p>
+The first line gives the message printed when a function is specified with the wrong number of arguments, say <code>sin(1,2)</code>.
+This message is a format string used by <code>String.format(spec,args...)</code>.
+The second example is a more complex message with multiple parts used when an illegal argument is passed to a function or operator. Not all messages
+needs to be supplied, some are extremely rare. 
+</p>
+<p>
+For the system to find the file it must be in the class path in the 
+<code>com/singularsys/jep</code> directory and named
+<code>messages_(language)_(Country).properties</code>
+for example
+<code>com/singularsys/jep/messages_fr_CA.properties</code>
+would specify the messages for French (fr) Canadian (CA) locale.
+<h3>Setting the default Locale</h3>
+<p>
+The default locale is normally set by the system. This can be overridden by specifying the <code>user.language</code> and <code>user.country</code>
+properties on the command line
+<pre class="codebox">
+java -Duser.language=fr -Duser.country=CA com.singularsys.jepexamples.consoles.Console
+</pre>
+<p>
+on unix machines it may be possible to set the default locale 
+by setting the environment variable, <code>LANG</code>, <code>LC_ALL</code> or <code>LC_MESSAGES</code>.
+</p>
+<pre class="codebox">  bash % export LC_ALL=de_DE</pre>
+<p>The default locale can also be set within java using</p>
+<pre class="codebox">  Locale.setDefault(Locale.GERMANY);
+</pre>
+<p>this should be called before any Jep code is loaded.</p>
+<h3>Testing messages</h3>
+<p>The <code>com.singularsys.jeptests.system.MessagesTest</code> class is a JUnit
+test class which tests and displays all messages printed by the system. You can use this class to check the results of any custom localization messages.
+</p>
+
+
+<h3>Standard Error reporting methods</h3>
+<p>
+The
+<a href="../javadoc/com/singularsys/jep/functions/PostfixMathCommand.html">PostfixMathCommand</a>
+the base class for custom functions provides a number of methods for checking the types
+of arguments. For example <code>double asDouble(int position, Object value)</code> checks 
+that the <code>value</code> can be converted to a double. If not a standard error message is generated
+using the <code>position</code> argument and an
+<a href="../javadoc/com/singularsys/jep/functions/IllegalParameterException.html">IllegalParameterException</a>
+thrown with this message.
+For example this method is used in the 
+<a href="../javadoc/com/singularsys/jep/functions/Signum.html">Signum</a>
+if it is supplied with a illegal argument, say <code>signum("abc")</code> then the
+message 
+</p>
+<pre>signum: illegal argument: abc[String] expected Number, argument number 0.</pre>
+<p>
+is generated using the <code>functions.IllegalParameterException.IllegalArgument</code>,
+<code>functions.IllegalParameterException.ActualValueClass</code>,
+<code>functions.IllegalParameterException.Expected</code>
+and
+<code>functions.IllegalParameterException.ArgumentNumber</code>
+messages. Other conversion methods include <code>asString(pos,str)</code>, <code>asInt(pos,val)</code>,
+<code>asLong(pos,val)</code>, <code>asBool(pos,val)</code>, and <code>asStrictInt(pos,val)</code>. 
+The final method not only checks if the number can be converted to an integer it also check that no rounding occurs.
+</p>
+<p>The 
+<a href="../javadoc/com/singularsys/jep/functions/IllegalParameterException.html">IllegalParameterException</a>
+class offers a number of different constructors for easy generation of standard error messages.
+If you want your own error message use the parent class
+<a href="../javadoc/com/singularsys/jep/EvaluationException.html">EvaluationException</a>.
+</p>
+
+
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>
+

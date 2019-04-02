@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Version History</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1><a id="top"></a>Version History</h1>
+  <p><a href="version.html">Jep 3 Releases</a> | <a href="version-2.html">Jep 2 Releases</a> | <a href="version-1.html">Jep 1 Releases</a></p>
+
+<h2>Version 3.5</h2>
+
+<h3>Major new features</h3>
+
+<p><b>Localization:</b></p>
+  <ul>
+  <li>All error messages now allow for localization.</li>
+  <li>New accessor class <code>com.singularsys.jep.JepMessages</code>.</li>
+  <li>Default properties file <code>com.singularsys.jep.messages.properties</code> provides default English messages</li>
+  <li>Reworking of messages to use more consistent syntax and increased detail.</li>
+  <li>New test class <code>com.singularsys.jeptests.system.MessagesTest</code> which checks Exceptions are thrown and prints all messages produced by Jep in the current locale.</li>
+  </ul>
+
+<p><b>Threads</b></p>
+<ul>
+<li>New <code>threadsafeevaluator</code> package which allows the same expression 
+to be evaluated in multiple threads/Jep instances without needing to transfer.</li>
+<li>New <code>ImportationVisitor</code> class which allows quicker transfer of an expression 
+between multiple threads/Jep instances.</li>
+<li><code>ThreadSpeedTest</code> compares evaluation speed with multiple threads. 
+This was previously named <code>ThreadTest</code> Both in the <code>com.singularsys.jepexamples.diagnostics</code> package.</li>
+<li>New <code>ThreadSafeSpeedTest</code> class used to tests speeds using the <code>ThreadSafeEvaluator</code>.</li>
+</ul>
+
+<p><b>Bound variables:</b></p>
+<ul>
+<li>New package which can tie a Jep variable to a field of an object. 
+Changing the value of the jep variable automatically changes and vice versa.</li>
+</ul>
+
+<h3>Major changes</h3>
+
+<p><b>ConfigurableParser:</b></p>
+<ul>
+<li>Line and column number information added to Configurable parser error messages when available.</li>
+<li>New <code>LookaheadNIterator</code> which allows any given number of characters of lookahead.</li>
+<li>Expose callback method <code>GrammarParser.parsePrefixSuffix()</code> allowing GrammarMatchers to ask the parser for a prefix-terminal-suffix
+like "-2", "x", "5!" or "sin(x)". Implement in the ShuntingYard parser</li>
+<li>New <code>SingleArgFunctionMatcher</code> which can parse expressions like "sin 30" with a single simple argument and no brackets.</li>
+<li>Some new protected methods in <code>ShuntingYard</code> allowing test matching of prefix expressions</li>
+<li>New <code>prev()</code> for <code>Lookahead2Itterator</code> allow last token consumed to be examined, useful for debugging messages.</li>
+<li>New default constructor and <code>setInputIterator()</code> 
+method for <code>Lookahead2Itterator</code> allows nested gramatical parsers.</li>
+<li>Protected <code>errorToken()</code> method for improved error reporting in <code>FunctionGrammarMatcher</code></li>
+<li>Reworked action of <code>OperatorTokenMatcher</code> one <code>OperatorToken</code>
+will be produced for each operator encountered, allowing line and column numbers to be recorded. 
+Changed constructors for <code>OperatorToken</code>.</li>
+<li><code>GrammarParserFactory</code> and <code>TokenizerFactory</code> now implement <code>JepComponent</code> and these
+can now be specified with <code>jep.setComponent()</code> which simplifies the construction process.</li>
+<li>Rework internal operation of Ternary Operators, inner class is no longer static</li>
+<li>Added an optional GrammarMatcher <code>com.singularsys.jep.configurableparser.matchers.SingleArgFunctionMatcher</code> 
+which can parse functions like "sin 30" with no brackets and a single argument.</li>
+<li>New <code>OperatorAsFunctionGrammarMatcher</code> which allows all operators to 
+be used like functions so it possible to parse <code>+(1,2,3,4)</code>.</li>
+<li>The <code>VariableTable</code> has a method <code>removeNonConstants()</code> which removes all 
+non-constant variables.
+<li><code>Variable</code> can have annotation using the <code>setHook(HookKey key, Object value)</code>  
+and <code>Object getHook(HookKey key)</code> methods. These use the <code>Node.HookKey</code> interface.
+<li>New <code>ComponentSubset</code> class to hold an partial set of components.
+</ul>
+
+<p><b>Functions:</b></p>
+<ul>
+<li>New <code>NullaryFunction</code> base class for functions with zero arguments.
+Implemented by <code>Random</code> and <code>ThreadSafeRandom</code> and <code>ConstantFunction</code></li>
+<li>Moved <code>StringFunctionSet</code> from <code>com.singularsys.jep.functions.strings</code> to 
+<code>com.singularsys.jep.misc</code> to remove package dependence.</li>
+<li>Function <code>Average</code> have altered functions specifing the Add, Divide methods used.</li>
+<li>Remove the <code>CallbackEvaluationI.Runnable</code> interfaces, impacting three classes
+<code>Case</code>, <code>Switch</code> and <code>SwitchDefault</code>, but no functional change.</li>
+<li>Add a <code>getID()</code> to <code>Comparative</code></li>
+<li>Add a protected <code>getVariable()</code> method to <code>Ele</code> which
+is overwitten by the thread-safe subclass <code>ThreadSafeEle</code></li>
+<li>Add a new constructor 
+<code>IllegalParameterException(PostfixMathCommandI pfmc,
+            int pos,
+            String expectedMsg, Object actualObject)</code>
+</li>
+<li>Remove several non-functional <code>run()</code> methods whose error behaviour is now handled by base class <code>PostfixMathCommand</code></li>
+<li>Base 10 <code>Logarithm</code> now has correct values for negative and complex arguments</li>
+<li>Removed the <code>CheckStack()</code> protected method from <code>PostfixMathCommand</code></li>
+<li>New <code>com.singularsys.jep.misc.threadsafeeval.ThreadSafeRandom</code> provides a faster random function
+based on Java's <a href="https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ThreadLocalRandom.html">ThreadLocalRandom</a></li>
+<li><code>Factorial</code> moved out of the <code>ExtendedOperatorSet</code> into its own class. The function throws exception when argument is greater than 20 causing overflow.</li>
+<li><code>ExtendedOperatorSet</code> no longer includes a ternary conditional operator as duplicate that in the JavaOperatorSet.</li>
+<li>Functions can implement the <code>JepComponent</code> interface. Their <code>init(Jep)</code> method will be called
+whenever jep is reinitialised. Likewise their <code>getLightWeightInstance()</code> will
+be called when building a function table for use in a separate thread.  
+</ul>
+
+<p><b>BigDecimals:</b></p>
+<ul>
+<li><code>BigDecFunctionTable</code> now provide the <code>if(cond,val1,val2),
+abs(val), signum(val), min(val1,val2,...), max(val1,val2,...), average(val1,val2,...),
+round(val), round(val,dp), roundSF(val,s), rint(val), rint(val,dp), ceil(val), floor(val)</code>
+functions by default.</li>
+<li>All function coerce Number values into BigDecimal values.</li>
+<li>New <code>BigDecAbs</code>, <code>BigDecRound</code>, <code>BigDecRoundSigFig</code>,
+<code>BigDecSignum</code> functions.</li>
+<li>Internal structure of <code>BigDecAdd</code> etc reworked so they work with the
+<code>MinMax</code> and <code>Average</code> functions.</li>
+<li>New <code>BigDecTieBreakComparative</code> to allow predictible behaviour
+for min/max when given
+two equal big decimal numbers with different precisions</li>
+</ul>
+
+<p><b>NullWapper package:</b></p>
+<ul>
+<li>Reorganisation and renaming classes in package, with consistent naming generally now beginning <code>NullWrapped...</code>
+All function base classes and interfaces now moved to com.singularsys.jep.misc.functions. This will break existing code using this package.</li>
+<li>NullWapped package now handles all functions, including those in the misc package.</li>
+<li>Bug fixed with NullWrapped versions of PostfixMathCommands with variable numbers of arguments. Evaluating these no longer cause exceptions.</li>
+<li>A new interface NullWrappedFunctionI created, to mark function which handle null wrapping correctly.</li>
+<li>NullWrapperFunctionFactory is no longer static</li>
+<li>Refactoring of NullWrappedFunctionTable and NullWrappedOperatorTable: the 
+<code>getWrappedFunction(PostfixMathCommandI)</code> and <code>getSpecialFunction(PostfixMathCommandI)</code>
+functions moved to NullWrappedFunctionFactory. Breaks backward compatibility.</li>
+<li>Better error reporting with NullWrapped functions.</li>
+<li>Fixed bug with null wrapped lazy Logical operators so these now behave like SQL.</li>
+</ul>
+
+
+<h3>Other new features</h3>
+<ul> 
+<li>The whole library now targets Java 1.7 rather than Java 1.5</li>
+<li>New <code>com.singularsys.jepexamples.diagnostics.DestructiveTests</code> diagnostic tool 
+which checks the size of expressions which can be parsed/evaluated before Stack overflows.</li>
+<li><code>Operator</code> now has an optional <code>printSymbol</code> property which can be used when printing out equations. 
+This is of use when alphabetical operator names like "AND" are used, here the printSymbol is set to " AND " so that 
+spaces appear when printing and
+<code>X==Y AND Z==W</code> is printed correctly.</li>
+<li>More complete tests for null values in <code>StandardEvaluator</code></li>
+<li>A new <code>NullPrintVisitor</code> class for reduced memory footprint.</li>
+<li>New <code>ElementOf</code> function which can test if an the first argument is in a list of items. 
+<code>elementOf(x,"north","south","east","west")</code></li>
+<li>New constructor for <code>IllegalParameterException</code> which allows details for expected result to be specified by a string.</li>
+<li>Default <code>PostfixMathCommand.run()</code> method which throws an exception reintroduced.</li>
+<li>New <code>OperatorAsFunctionGrammarMatcher</code> which allows specific operators to be treated as function so you can have 
+<code>+(1,2,3,4)</code>.</li>
+<li>Add an eq() method to <code>Complex</code> for testing equality using double ==.</li>
+<li>Add a single arg <code>buildFunctionNode(String,Node)</code> to <code>NodeFactory</code>.</li>
+<li><code>VariableTableObserver</code> now has a switch to allow/dis-allow watching in change of variable values.</li>
+<li>The <code>Console</code> applications can set a double format to format numbers in printf like formats.</li>
+<li>History mechanism added to console applications.</li>
+<li>New method <code>Jep.setVariable(String,Object)</code> which works like <code>addVariable</code> but does not throw exceptions.</li>
+<li>Add a <code>trapUnsetValues</code> field <code>FastEvaluator</code> with corresponding getter and setters. Detects is a variable has an unset value.</li>
+<li>New <code>RealComponents</code> for the usercase where pure real evaluation is needed, function like sqrt(-1) return NaN rather than a complex number.</li> 
+<li>The <code>DoNothingVisitor</code> now has a method <code>childrenHaveChanged(Node, Node[])</code>
+method to test if new children aare different from the original.
+<li>The <code>StandardVariableTable</code> and <code>RealVariableTable</code> now allow delayed
+initialisation with constants added when the VariableFactory is set in the init method.
+</ul>
+
+<h3>Removed features</h3>
+<ul>
+<li><code>PostfixMathCommand.checkStack()</code> method removed as of little utility.</li>
+<li>Unused interface <code>CallbackEvaluationI.Runnable</code> removed.</li>
+<li>Add method to Complex for printing a complex number in the (3.0+2.0 i) format when no number format is specified.</li>
+</ul>
+
+<h3>Bug fixes</h3>
+<ul>
+<li>Fixed bug with accessing 2D array elements in <code>Ele</code>.</li>
+<li>Fixed check for array bounds in <code>Ele</code>.</li>
+<li>Fixed zero-impact bug with ID's of operator nodes in <code>NodeFactory</code>.</li>
+<li>Fixed bug where <code>VariableTable.clearValues()</code> called, but evaluators return previous values.</li>
+<li>Bug fix in <code>SymbolTokenMatcher</code> when parsing alternate symbols for operators.</li>
+<li>Fix bug with <code>NaryBinaryFunction</code> when given more than 2 arguments. (Not normally produced during parsing)</li>
+<li>Fixed bug with <code>Logarithm</code> (Log base 10) with complex arguments. Was giving results as natural logarithm.</li>
+<li>PrintVisitor did not work correctly with Complex constants.</li>
+<li>PrintVisitor now always puts brackets round urary ops on rhs, e.g. <code>a*(-b)</code>.
+</ul>
+
+<h3>Other changes</h3>
+<ul>
+<li>Internal operation of some functions improved for minor speed up.</li>
+<li>Slight speed up in <code>RealEvaluator</code>, <code>FastEvaluator</code></li>
+<li>The decorator constructors of <code>BitwiseOperatorTable</code> and <code>JavaOperatorTable</code> no longer set the basis operators
+instead using those in the supplied argument.</li>
+<li>The <code>LightWeightComponentSet</code> now uses the <code>NullPrintVisitor</code>.</li>
+<li>Changed access level modifiers of some fields in <code>Operator</code>, <code>FastEvaluator</code> and <code>PrintVisitor</code> to protected to allow use by subclasses </li>
+<li>Removed unused parser field in <code>SimpleNode</code> remove corresponding constructors in subclasses.</li>
+<li>Functions <code>Real</code>, <code>Str</code>, <code>BitComp</code> now implement <code>UnaryFunction</code>.</li>
+<li>Functions <code>BitAnd</code>, <code>BitOr</code> <code>BitXor</code> <code>LShift</code> <code>RShift</code> <code>URShift</code> 
+now implement <code>BinaryFunction</code>.</li>
+<li>Functions <code>FromBase</code>, <code>Switch</code> <code>SwitchDefault</code> <code>ToBase</code> 
+<code>RShift</code> <code>URShift</code> now implement <code>NaryFunction</code>.</li>
+<li>Most methods in <code>NodeFactory</code> now have varargs parameters simplify the number of methods and several places they are called from. Will
+require corresponding changes in subclasses.</li>
+<li>Fix spelling of <code>basicIndetifierMatcher</code> and <code>dottedIndetifierMatcher</code>, replace with
+<code>basicIdentifierMatcher</code> and <code>dottedIdentifierMatcher</code> deprecate old versions.
+<li>Add a <code>StackCheckingFastEvaluator</code> in the package <code>com.singularsys.jeptests.system</code>
+which can be used to detect some stack corruption errors.</li>
+<li><code>PrintVisitor</code> in Full Bracket mode does no longer puts brackets around variables and positive constants
+as there is no ambiguity.</li>
+<li>Added a <code>sqrt()</code> function to the standard set of functions.
+</ul>
+
+<h2 class="version">Version 3.4 <span class="date">(released 2010/11/01)</span></h2>
+<h3>Core Jep changes</h3>
+  <ul>
+  <li>Allow strings to be used together with BigDecimals so that strings can be concatenated with + and compared in relations.</li>
+  <li>Added an <a href="../javadoc/com/singularsys/jep/EmptyOperatorTable.html">EmptyOperatorTable</a> which has zero operators as a default. 
+  A consequence of this is moving of the OperatorKey interface to EmptyOperatorTable.</li>
+  <li>The Jep class now has a constructor taking a list of components; some methods made protected to allow sub-classes; 
+  has a <code>getAdditionComponent(Class&lt;?&gt;)</code> method to find components which instance a particular class.</li>
+  <li>PrintVisitor adds an <code>append(String)</code> method allowing classes which implement PrintRulesI to append text to the output.</li>
+  <li>The <code>VariableTable</code> has a new method <code>clearValues()</code> which clears the valid-value flag of
+  all non constant values. Constants are always valid.</li>
+  <li>The standard parser is now generated with JavaCC 5.0 (previously JavaCC 4.0)</li>
+  </ul>
+<h3>Functions</h3>
+  <ul>
+  <li>All function classes are no longer final to allow for sub-classing by users. Visibility of some methods increased to allow sub classing.</li>
+  <li>The <code>round</code> function now uses Math.round and a new <code>rint</code> function is added which calls Math.rint. These differ in how 1.5 is rounded (rint rounds up to nearest even value, round always rounds down).</li>
+  <li>The Average function can be configured to change behaviour for zero length arrays, either NaN is returned or an Exception is thrown (the default). A <code>calc(List)</code> method makes it easier to create sub-classes which act on lists of objects.</li>
+  <li>The MinMax function now flattens its arguments so <code>min([1,[2,3]])</code> can be computed. The Comparative parameter can be set by sub classes.</li>
+  <li>The new VSum function sums the elements in a vector or matrix.</li>
+  </ul>
+<h3>Configurable Parser</h3>
+  <ul>
+  <li>New interfaces <code>TokenizerFactory</code>, <code>GrammarParserFactory</code> which 
+  allow different objects to be used for the tokenizing and parsing steps.</li>
+  <li><code>ShuntingYard</code> some methods made protected.</li>
+  <li><code>Tokenizer</code> constructor changed, line and column numbering starts from 1.</li>
+  <li><code>OperatorTokenMatcher</code> improved handling of operators with word characters.</li>
+  <li><code>GrammarParser</code> has an additional method <code>public void setIterator(Lookahead2Iterator&lt;Token&gt;)</code> setting the iterator used by  <code>parseSubExpression()</code>.</li>
+  </ul>
+<h3>Misc classes</h3>
+  <ul>
+  <li><code>MacroFunction</code> has an additional constructor for use with non recursive functions.</li>
+  <li>A new package <code>com.singularsys.jep.misc.lineNumbering</code> to allow line number information to be stored in nodes in the parse tree. With classes <code>LineNumberingNodeFactory</code>,
+  <code>LineNumberingShuntingYard</code>.</li>
+  <li>A new package <code>com.singularsys.jep.misc.nullwrapper</code> which provides functions and operators which propagate null values through results. These classes can be wrapped
+  around other classes to add this functionality to existing classes.</li>
+  <li>Additional constructions provided for visitors in <code>com.singularsys.jep.walkers</code> so they can be used as JepComponents.</li>
+  </ul>
+<h3>Tests and Examples</h3>
+  <ul>
+  <li>JUnit Tests split into <code>system</code> and <code>unit</code> packages.
+  </li></ul>
+<h3>Bug fixes</h3>
+  <ul>
+  <li>Fixed bug with FastEvaluator when calling the same function twice.</li>
+  <li>Fixed potential null reference exception in SimpleNode.hasNext()</li>
+  <li>Fixed issue where PrintVisitor.getMode(int testmode) did not return the correct value.</li>
+  </ul>
+  <h2 class="version">Version 3.3 <span class="date">(released 2008/11/30)</span></h2>
+  <h3>Core Jep changes</h3>
+  <ul>
+  <li>New default evaluator 
+  <a href="../javadoc/com/singularsys/jep/standard/FastEvaluator.html">FastEvaluator</a>
+  which achieves a 2x-3x speed improvement using the new interfaces. <a href="../javadoc/com/singularsys/jep/standard/StandardEvaluator.html">StandardEvaluator</a> is still available for compatibility purposes.</li>
+  <li>New constructor <code>Jep(JepComponent... comp)</code> which makes it easier
+   to construct Jep with a specific set of components.
+  For example <code>new Jep(new StandardConfigurableParser())</code>.</li>
+  <li>New version of the operator table 
+  <a href="../javadoc/com/singularsys/jep/OperatorTable2.html">OperatorTable2</a>
+  which uses enums to specify keys. Methods that are common to all operator tables are 
+  declared in a new interface 
+  <a href="../javadoc/com/singularsys/jep/OperatorTableI.html">OperatorTableI</a>.
+  Note that <code>Jep.getOperatorTable()</code> 
+  now returns <code>OperatorTableI</code> which may break some code.</li>
+  <li>
+  <a href="../javadoc/com/singularsys/jep/parser/Node.html">Node</a> now defines default implementations
+  for <code>getName()</code>, <code>getValue()</code> making it easier to extract values without a cast.
+  </li>
+  <li>
+  <a href="../javadoc/com/singularsys/jep/parser/Node.html">Node</a> now defines methods <code>setHook()</code>, <code>getHook()</code> allowing annotation of nodes with key-value pairs.
+  </li>
+  <li>Unit tests converted to use JUnit 4.</li>
+  </ul>
+  <h3>Functions</h3>
+  <ul>
+  <li>
+  New functions 
+  <a href="../javadoc/com/singularsys/jep/misc/functions/Switch.html">Switch</a>,
+  <a href="../javadoc/com/singularsys/jep/misc/functions/Case.html">Case</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/Left.html">Left</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/Right.html">Right</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/Mid.html">Mid</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/Substring.html">Substring</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/LowerCase.html">LowerCase</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/UpperCase.html">UpperCase</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/Length.html">Length</a>, <a href="../javadoc/com/singularsys/jep/functions/strings/Trim.html">Trim</a>.</li>
+  <li>New base classes 
+  <a href="../javadoc/com/singularsys/jep/functions/UnaryFunction.html">UnaryFunction</a>,
+  <a href="../javadoc/com/singularsys/jep/functions/BinaryFunction.html">BinaryFunction</a>,
+  <a href="../javadoc/com/singularsys/jep/functions/NaryFunction.html">NaryFunction</a>, and 
+  <a href="../javadoc/com/singularsys/jep/functions/NaryBinaryFunction.html">NaryBinaryFunction</a>
+  simplifying interface for defining user functions. For example, a <code>BinaryFunction</code> 
+  just needs to define an <code>Object eval(Object l, Object r)</code> method. 
+  </li>
+  <li>
+  New exception class
+  <a href="../javadoc/com/singularsys/jep/functions/IllegalParameterException.html">IllegalParameterException</a>
+  sub-classing <code>EvaluationException</code> provides standardised error 
+  messages, for the common case of wrong arguments being passed to user functions. 
+  </li>
+  <li>
+  <a href="../javadoc/com/singularsys/jep/functions/PostfixMathCommand.html">PostfixMathCommand</a>
+  defines convenience methods such as <code>int asInt()</code> to convert arguments to a specified type.
+  </li>
+  <li>
+  New optional functions
+  <a href="../javadoc/com/singularsys/jep/misc/functions/IsNull.html">IsNull</a>,
+  <a href="../javadoc/com/singularsys/jep/misc/functions/IsNaN.html">IsNaN</a>,
+  <a href="../javadoc/com/singularsys/jep/misc/functions/IsInfinite.html">IsInfinite</a>,
+  <a href="../javadoc/com/singularsys/jep/misc/functions/IsType.html">IsType</a>
+  for testing the value and type of arguments. These are not included by default. 
+  </li>
+  </ul>
+  
+  <h3>Examples</h3>
+  <ul>
+  <li>Enhanced 
+  <a href="../javadoc/com/singularsys/jepexamples/applets/FunctionPlotter.html">FunctionPlotter</a> applet allowing
+  zooming and translation.
+  </li>
+  <li>New  
+  <a href="../javadoc/com/singularsys/jepexamples/applets/ParametrisedPlotter.html">ParametrisedPlotter</a> and
+  <a href="../javadoc/com/singularsys/jepexamples/applets/PolarPlotter.html">PolarPlotter</a>.</li>
+  <li>New
+  <a href="../javadoc/com/singularsys/jepexamples/diagnostics/SpeedTest.html">SpeedTest</a> application for comparing different configurations.
+  </li>
+  
+  </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2 class="version">Version 3.2 <span class="date">(released 2008/02/12)</span></h2>
+  <p>General Changes:</p>
+      <ul>
+        <li>Added support for expression tree analysis using TreeAnalyser</li>
+        <li>Fixed errors in the documentation of the default configuration</li>
+        <li>Improved the operator table</li>
+      </ul>
+      <p>Changes to the configurable parser:</p>
+      <ul>
+        <li>New StandardConfigurableParser class</li>
+        <li>Parse error reporting with line and column numbers </li>
+        <li>Added support for hexadecimal numbers (e.g. <code>0x1F</code>) </li>
+        <li>Added support for bitwise operators (bitwise or: <code>a | b</code>, bit shifting <code>a &lt;&lt; 2</code>) in BitwiseOperatorTable </li>
+        <li>Added support for <code>a?b:c</code>, <code>x+=1</code>, <code>++x</code> syntax </li>
+        <li>Added support for case-insensitive operators </li>
+        <li>Added support for multiple expressions separated by semicolons</li>
+        <li>Added support for multiple dimensional array access (<code>a[1][1]</code> accesses the first element of a two-dimensional array)</li>
+        <li>Fixed issues with escape characters</li>
+        <li>Fixed power and unary minus precedence to be consistent with the standard parser (&quot;-3^2&quot;  should equal -9)</li>
+      </ul>
+ 
+      <p>Known issues:</p>
+      <ul>
+        <li><code>Jep.addVariable</code> does not notify the user when the specified value can not be set. This happens when a constant is already defined with the same name.</li>
+      </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2 class="version">Version 3.1 <span class="date">(released 2007/09/22)</span></h2>
+  <ul>
+    <li>Added serialization support</li>
+    <li>Fixes bug prohibiting adding alphabetic operators to the configurable parser (such as AND)</li>
+    <li>Added short circuit logical operator evaluation for &amp;&amp; and || to speed up evaluation</li>
+    <li>Added <code>avg</code>, <code>min</code>, and <code>max</code> functions</li>
+    <li>Makes use of new Java 1.5 Math functions <code>log10</code>, <code>sinh</code>, <code>cosh</code>, <code>tanh</code>, and <code>hypot</code></li>
+    <li>Added StrictNaturalLogarithm which returns <code>NaN</code> for negative reals rather than complex.</li>
+    <li>Fixed mistake in the Basic Usage section of the documentation</li>
+  </ul>
+  <p>Known issues:</p>
+  <ul>
+    <li>The default settings for allowUndeclared, implicitMultiplication, and allowAssignment are <strong>true</strong>. The documentation falsely claims that the defaults are <strong>false</strong>.</li>
+  </ul>
+    <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" name="top" width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2 class="version">Version 3.0 <span class="date">(released 2007/07/01)</span></h2>
+  <ul>
+    <li>Added <a href="../html/usage.html">RealEvaluator</a> for fast evaluation 
+      of expressions not containing strings, arrays or complex numbers</li>
+    <li>Added <a href="../html/bigdecimal.html">BigDecComponents</a> for high 
+      precision calculations using BigDecimal numbers</li>
+    <li>New <a href="../html/components.html">component architecture</a> (pluggable 
+      parser, evaluator, and more)</li>
+    <li>Added new <a href="../html/confparser.html">configurable parser</a> (allows 
+      alternate syntax)</li>
+    <li>Added expression printing capabilities to the Jep class </li>
+    <li>Added <a href="../html/functions.html">new functions</a>: round, floor, 
+      ceil, lg (log base 2)</li>
+    <li>Major package restructuring</li>
+    <li>No longer available under the GPL license</li>
+    <li>Changed <a href="../html/usage.html">error handling</a> from hasError() 
+      function to exception throwing</li>
+    <li>Switched from JavaCC 3.2 to JavaCC 4.0</li>
+    <li>Switched compatibility from Java 1.2 to Java 1.5</li>
+    <li>Switched from JUnit 3 to JUnit 4.1</li>
+    <li>See <a href="migrate.html">Migration</a> on how to smoothly upgrade from 
+      a previous version</li>
+  </ul>
+  <p>Known issues:</p>
+  <ul>
+    <li>The default settings for allowUndeclared, implicitMultiplication, and allowAssignment are <strong>true</strong>. The documentation falsely claims that the defaults are <strong>false</strong>.</li>
+  </ul>
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

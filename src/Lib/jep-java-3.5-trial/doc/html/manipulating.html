@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --><title>Jep Documentation - Manipulating</title><!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1><a id="top"></a>Advanced Features</h1>
+     
+  <h2><a id="manipulating"></a>Manipulating expressions</h2>
+  <p>It is possible to manipulate expressions by manipulating the corresponding expression tree created by Jep. The 
+    <code>parse()</code> 
+    and <code>getLastRootNode()</code> methods can be used to obtain the expression tree of an expression. 
+    This will be useful if you want to do more than just evaluate the expressions 
+    you parse. For example, you may want to determine the derivative of an expression. 
+    In order to be able to this, you  need direct access to the expression 
+  tree.</p>
+  <p>The expression tree consists of Nodes. Each of the nodes in the parse tree 
+    is an object of one of the following types:</p>
+  <ul>
+    <li><strong>ASTFunNode</strong> 
+      - Functions: cos, sin</li>
+    <li><strong>ASTOpNode</strong> - Operators: +, -, *, /</li>
+    <li><strong>ASTConstant</strong> 
+      - Constants: 1.0, 0.0, "a literal string"</li>
+    <li><strong>ASTVarNode</strong> 
+      - Variables: x, y</li>
+  </ul>
+   
+  <h3>Node methods</h3>
+  <p>
+  There are several methods of Node and its sub-classes which can be used to interrogate
+  the node.</p>
+  <dl>
+  <dt><strong>All nodes</strong> (<a href="../javadoc/com/singularsys/jep/parser/Node.html">com.singularsys.jep.parser.Node</a>)</dt>
+  <dd>
+  <ul>
+  <li><code>node.jjtGetNumChildren()</code> returns the number of children of the node. 
+  For constants and variable nodes this is 0, for functions and operators this is the number of arguments.</li>
+  <li><code>node.jjtGetChild(i)</code> returns the i-th child of the node.</li>
+  </ul>
+  </dd>
+  <dt><strong>Constant nodes</strong> (<a href="../javadoc/com/singularsys/jep/parser/ASTConstant.html">com.singularsys.jep.parser.ASTConstant</a>)</dt>
+  <dd>
+  <ul>
+  <li><code>((ASTConstant) node).getValue()</code> returns the value of a constant node.</li>
+  </ul>
+  </dd>
+  <dt><strong>Variable nodes</strong> (<a href="../javadoc/com/singularsys/jep/parser/ASTVarNode.html">com.singularsys.jep.parser.ASTVarNode</a>)</dt>
+  <dd><ul>
+  <li><code>((ASTVarNode) node).getVar()</code> returns the variable object associated with a variable node.</li>
+  <li><code>((ASTVarNode) node).getName()</code> returns the name of the variable.</li>
+  <li><code>((ASTVarNode) node).getValue()</code> returns the value of the variable.</li>
+  </ul></dd>
+  <dt><strong>Function nodes</strong> (<a href="../javadoc/com/singularsys/jep/parser/ASTFunNode.html">com.singularsys.jep.parser.ASTFunNode</a>)</dt>
+  <dd><ul>
+  <li><code>((ASTFunNode) node).getName()</code> returns the name of the function.</li>
+  <li><code>((ASTFunNode) node).getPFMC()</code> returns PostfixMathCommandI for the function.</li>
+  </ul></dd>
+  <dt><strong>Operator nodes</strong> (<a href="../javadoc/com/singularsys/jep/parser/ASTOpNode.html">com.singularsys.jep.parser.ASTOpNode</a>)</dt>
+  <dd><ul>
+  <li><code>((ASTOpNode) node).getOperator()</code> returns the operator.</li>
+  <li><code>((ASTOpNode) node).getPFMC()</code> returns PostfixMathCommandI for the function.</li>
+  </ul></dd>
+  </dl>
+  
+  <h3>Constructing expressions</h3>
+  <p>
+  The <a href="../javadoc/com/singularsys/jep/NodeFactory.html">com.singularsys.jep.NodeFactory</a>
+  class contains various methods for creating different types of node to make an expression. 
+  For example the following produces an expression "5+cos(x)".
+  </p>
+<pre class="codebox">
+NodeFactory nf = jep.getNodeFactory();
+Node node = nf.buildOperatorNode(
+    jep.getOperatorTable().getAdd(),
+    nf.buildConstantNode(new Double(5)),
+    nf.buildFunctionNode("cos", nf.buildVariableNode("x")));
+</pre>
+  
+<h3><a id="WALKERS"></a>Traversing expressions</h3>
+  <p>
+  There are several methods of traversing the expression tree. The most commonly
+  used method is based on the Visitor pattern.
+  <a href="../javadoc/com/singularsys/jep/ParserVisitor.html">ParserVisitor</a>
+  defines an interface for classes which wish to use this.</p>
+<pre class="codebox">
+public interface ParserVisitor {
+  public Object visit(ASTConstant node,Object data) throws JepException;
+  public Object visit(ASTFunNode node,Object data) throws JepException;
+  public Object visit(ASTVarNode node,Object data) throws JepException;
+  public Object visit(ASTOpNode node,Object data) throws JepException;
+}
+</pre>
+<p>A class which wishes to traverse the tree would need to implement each method,
+the <code>data</code> argument can be used to pass in arbitrary data and they can return arbitrary values.
+To start the transversal call
+<code>Node.jjtAccept(ParserVisitor pv,Object data)</code>
+for the top node of the expression, the visitor pattern will take care of
+calling the correct method.</p>
+<p>
+The <code>visit(ASTFunNode)</code> and <code>visit(ASTOpNode)</code> methods
+will often be similar in functionality as both have a PFMC and a number of child nodes.
+They should generally call <code>Node.jjtAccept</code> for each child.</p>
+<pre class="codebox">
+public Object visit(ASTFunNode node,Object data) throws JepException
+{
+	int nChild = node.jjtGetNumChildren();
+	Object[] results = new Object[nChild];
+	for(int i=0;i&lt;nChild;++i)
+		results[i] = node.jjtGetChild(i).jjtAccept(this,data);
+	// now process this node
+	return res;
+}
+// Just call the ASTFunNode method
+public Object visit(ASTOpNode node,Object data) throws JepException
+{
+	return visit((ASTFunNode) node,data);
+}
+</pre>
+
+<p>
+For visitors which manipulate expressions and return a modified parse tree
+the 
+ <a href="../javadoc/com/singularsys/jep/walkers/DoNothingVisitor.html">DoNothingVisitor</a>
+and
+ <a href="../javadoc/com/singularsys/jep/walkers/DeepCopyVisitor.html">DeepCopyVisitor</a>
+can be used as base classes. DoNothingVisitor visits each node in turn and does nothing, it
+provides the <code>Node[] visitChildren(Node node,Object data)</code> methods
+which simplifies the process of visiting the child nodes. DeepCopyVisitor produces a deep copy
+of the expression.
+</p>
+ 
+<p>
+For very large equations with 10,000+ nodes the standard ParserVisitor class
+can encounter problems with stack overflows due to recursions. The 
+<a href="../javadoc/com/singularsys/jep/walkers/PostfixTreeWalker.html">PostfixTreeWalker</a>
+offers a base class for
+a transversal strategy which minimizes the number of stack frames 
+used and the PostfixEvaluator
+is an evaluator which uses this strategy. These methods visit each node in postfix fashion
+hence for <code>1+cos(x)</code> the nodes are visited in the order
+1, x, cos, +.
+</p>
+<p>
+<a href="../javadoc/com/singularsys/jep/walkers/PrefixTreeWalker.html">PrefixTreeWalker</a> is similar but visits nodes in a prefix fashion
+for <code>1+cos(x)</code> the nodes are visited in the order
+<code>+, 1, cos, x</code>.
+</p>
+  
+<h3>Interrogating expressions</h3>
+<p>The <a href="../javadoc/com/singularsys/jep/walkers/TreeAnalyzer.html">TreeAnalyzer</a> provides methods to find the variables,
+functions, operators and constants in an equation, as well as the number of nodes and depth of the tree.
+</p>
+<pre class="codebox">
+Jep j=new Jep();
+Node n = j.parse("0.5*(cos(x+y)+cos(x-y))");
+TreeAnalyzer ta = new TreeAnalyzer(n);
+// get sorted list of variable names
+String[] vars=ta.getVariableNames();
+System.out.println(ta.toString());
+/* Prints  
+Nodes: 11, depth: 5
+Variables: 4 - x(2), y(2)
+Functions: 2 - cos(2)
+Operators: 4 - "-"(1), "+"(2), "*"(1)
+Constants: 1 - 0.5(1)
+*/</pre>
+
+<h3>Substitution</h3>
+<p>The <a href="../javadoc/com/singularsys/jep/walkers/SubstitutionVisitor.html">SubstitutionVisitor</a> 
+provides methods to substitute one expression into another.
+For example
+</p>
+<pre class="codebox">
+  Jep jep = new Jep();
+  Node node = jep.parse("x^2+x");
+  Node sub = jep.parse("sin(y)");
+  SubstitutionVisitor sv = new SubstitutionVisitor(jep);
+  Node res = sv.substitute(node,"x",sub);
+  </pre>
+Will give the expression <code>(sin(y))^2+sin(y)</code>.
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top" width="38" height="15"/></a></div>
+
+
+
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

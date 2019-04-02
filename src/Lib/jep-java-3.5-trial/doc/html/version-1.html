@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Version History</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1><a id="top"></a>Version History</h1>
+  <p><a href="version.html">Jep 3 Releases</a> | <a href="version-2.html">Jep 2 Releases</a> | <a href="version-1.html">Jep 1 Releases</a></p>
+  <h2 class="version">Version 1.1</h2>
+  <ul>
+    <li>2000/11/30: Changed order of precedence so division occurs before multiplication    </li>
+    <li>2000/10/01: Added exponential notation (i.e. 1.23e-3)</li>
+    <li>2000/10/16: Tweaked code here and there</li>
+    <li>2000/10/21: Finished new sample applet</li>
+    <li>2000/10/21: Repackaged and reorganized all source code and classes</li>
+  </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2 class="version">Version 1.0</h2>
+  <ul>
+    <li>2000/07/03: Added more documentation</li>
+    <li>2000/07/10: Removed all operator nodes such as MulNode or PlusNode, and 
+      replaced them by using FunNode nodes with PostfixMathCommands</li>
+    <li>2000/08/07: Considering using JavaCC to recreate the Parser</li>
+    <li>2000/09/01: Fixed multiple subtraction problem. Now 1-2-3 = (1-2)-3 instead 
+      of 1-(2-3)</li>
+  </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2 class="version">Version 0.3</h2>
+  <ul>
+    <li>2000/06/01: Created Web page and posted it</li>
+    <li>2000/06/02: Edited Web page, added one variable field just for integers</li>
+    <li>2000/06/06: Started adding internal code documentation</li>
+    <li>2000/06/09: Figured out how to create objects at run-time with the reflection 
+      package. Probably useful for future use of user defined functions</li>
+    <li>2000/06/10: Finished adding capability of parsing standard functions as 
+      well as user defined functions (thanks to Ross Bagely)</li>
+  </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2 class="version">Version 0.2</h2>
+  <ul>
+    <li>2000/06/18: Added SharedConstants class for the parser package</li>
+    <li>2000/06/18: Added InvalidExpressionException class which is thrown inside 
+      Parser</li>
+    <li>2000/06/19: Tweaked the error report of Parser</li>
+    <li>2000/06/27: Simplified process of adding user defined functions by adding 
+      a parent class PostfixMathCommand, that contains a function for checking 
+      the stack passed to the command</li>
+    <li>2000/06/27: Extended the FunNode class to be able to handle functions 
+      with multiple arguments, needs to be implemented in the parser yet</li>
+    <li>2000/07/01: Completed expanding parser to handle functions with multiple 
+      arguments. Implemented angle function to return the angle whose tangent 
+      is equal to the ratio of the arguments x/y (using the Math.atan2 method).    </li>
+  </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

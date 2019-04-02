@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<!-- #BeginEditable "doctitle" --> 
+<title>Jep Documentation - Operators</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1" />
+</head>
+
+<body bgcolor="#ffffff">
+
+<!-- NAVIGATION ======================================================= -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" alt="new window" width="15" height="11" /></a></li>
+  </ul>
+  <h1>Jep Java</h1>
+  <ul>
+    <li><a href="index.html">Introduction</a></li>
+    <li><a href="usage.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="customfunctions.html">Custom Functions</a></li>
+    <li><a href="bigdecimal.html">BigDecimal</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="migrate.html">Migration</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Advanced Features</h1>
+  <ul>
+    <li><a href="manipulating.html">Manipulating Expressions</a></li>
+    <li><a href="components.html">Components</a></li>
+    <li><a href="confparser.html">Configurable Parser</a></li>
+    <li><a href="serialization.html">Serialization</a></li>
+    <li><a href="threads.html">Threads</a></li>
+    <li><a href="localization.html">Localization</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="advanced.html">Other advanced features</a></li>
+  </ul>
+  
+<!-- 
+	<h1>Extensions</h1>
+		<ul>
+		<li><a href="extensions/index.html">Overview</a></li>
+        <li><b>Type system and evaluation</b></li>
+		<li><a href="extensions/field.html">Fields</a></li>
+		<li><a href="extensions/matrix.html">Matrices</a></li>
+		<li><a href="extensions/fastreal.html">Fast eval real</a></li>
+		<li><a href="extensions/fastmatrix.html">Fast eval matrices</a></li>
+        <li><b>Symbolic operations</b></li>
+		<li><a href="extensions/cleaner.html">Expression cleaner</a></li>
+		<li><a href="extensions/polynomials.html">Polynomials</a></li>
+        <li><a href="extensions/rewrite.html">Rewrite expressions</a></li>
+		<li><a href="extensions/xjep.html">XJep Utilities</a></li>
+        <li><a href="extensions/djep.html">Differentiation</a></li>
+        <li><b>Other features</b></li>
+		<li><a href="extensions/structure.html">Structured programming</a></li>
+		<li><a href="extensions/mathml.html">MathML conversion</a></li>
+		<li><a href="extensions/statistical.html">Statistical functions</a></li>
+		<li><a href="extensions/version.html">Version History</a></li>
+		</ul>
+-->
+    
+</div>
+<!-- CENTER CONTENT ================================================== -->
+<div id="centercontent">
+
+
+<!-- #BeginEditable "Text" --> 
+  <h1><a id="top"></a>Operators</h1>
+  <h2>Built in operators</h2>
+  <p>All common arithmetic operators are provided by the 
+    <a href="../javadoc/com/singularsys/jep/standard/StandardOperatorTable.html">StandardOperatorTable</a>. 
+    Boolean operators are also fully supported. Relational and logical operators 
+    (&gt;, &lt;, &gt;=, &lt;=, ==, !=, !) are evaluated as Boolean types (either <code>Boolean.TRUE</code> or <code>Boolean.FALSE</code>).</p>
+  <p>The following table shows the operators in order of precedence. A check mark
+    indicates that the operator can be used with the specific type of variable. 
+    Refer to the <a href="grammar.html">grammar</a> for detailed information on the 
+    operator precedence.</p>
+  <table class="clean">
+    <tr> 
+      <td width="225">&nbsp;</td>
+      <td width="91">&nbsp;</td>
+      <td width="76"><b>Double</b></td>
+      <td width="81"><b>Complex</b></td>
+      <td width="91"><b>String</b></td>
+      <td width="91"><b>Vector</b></td>
+    </tr>
+    <tr> 
+      <td width="225">Power</td>
+      <td width="91">^</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Boolean Not</td>
+      <td width="91">!</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Unary Plus, Unary Minus</td>
+      <td width="91">+x, -x</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Dot product, cross product</td>
+      <td width="91">., ^^</td>
+      <td width="76" align="center">&nbsp;</td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+    </tr>
+    <tr> 
+      <td width="225">Modulus</td>
+      <td width="91">%</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Division</td>
+      <td width="91">/</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+    </tr>
+    <tr> 
+      <td width="225">Multiplication</td>
+      <td width="91">*</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+    </tr>
+    <tr> 
+      <td width="225">Addition, Subtraction</td>
+      <td width="91">+, -</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /> 
+        (only +)</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+    </tr>
+    <tr> 
+      <td width="225">Less or Equal, More or Equal</td>
+      <td width="91" >&lt;=, &gt;=</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Less Than, Greater Than</td>
+      <td width="91">&lt;, &gt;</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Not Equal, Equal</td>
+      <td width="91">!=, ==</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Boolean And</td>
+      <td width="91">&amp;&amp;</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Boolean Or</td>
+      <td width="91">||</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="225">Assignment</td>
+      <td width="91">=</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2>Adding operators</h2>
+  <p> Both supplied parsers allow new operators to be added. The <a href="confparser.html">configurable 
+    parser</a> makes the process quite simple but more steps are needed for using 
+    the default JavaCC parser. In both cases, new operators should be added to 
+    the OperatorTable used by the Jep instance. </p>
+  <p>Before attempting to add an operator you should be familiar with adding a 
+    <a href="customfunctions.html">custom function</a> to Jep. An instance PostfixMathCommandI 
+    (pfmc) is used to control how the operator is evaluated.</p>
+	<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem -->
+<h2>Adding and manipulating operators for the configurable parser</h2>
+<p>
+To add operators to the configurable parser, they must first be added to the Operator table. Then the <code>jep.reinitializeComponents()</code> method must be called to inform the parser about the new operators. Once this is done, the parser will be able to use the new operators. It is important that the precedence and associativity of the operators has been set correctly prior to calling the method.
+</p>
+  <h3>Modifying an existing operator</h3>
+  <p>
+  If you just wish to change the underlying PostfixMathCommandI of an operator, for example to allow it
+  to work with a new type of value and keeping the existing precedence and associativity and symbol,
+  then the <code>setPFMC()</code> method of Operator can be called. The operator can be
+  recovered from the various get methods of the OperatorTable, for instance to change the
+  PostfixMathCommandI of the  And (&amp;&amp;) operator use:</p>
+<pre class="codebox">
+jep.getOperatorTable().getAnd().setPFMC(new LazyLogical(LazyLogical.AND));
+</pre>
+
+  <p>
+  If you wish to change the symbol used to represent an operator you can use:</p>
+<pre class="codebox">
+jep.getOperatorTable().getAnd().setSymbol("AND");
+jep.reinitializeComponents();
+</pre>
+<p>Note the call to <code>jep.reinitializeComponents()</code> which is needed to inform the other components of the 
+new symbol.</p>
+<p>
+It is possible to allow alternate symbols for and operator which will be recognised by the parser. For example unicode has
+particular characters for the minus sign, U+2212, (&#x2212;). 
+Devices like android phones often use these symbols.
+Such alternate symbols can be set via the <code>
+<a href="../javadoc/com/singularsys/jep/Operator.html#addAltSymbol-java.lang.String-">Operator.addAltSymbol(String)</a></code> method.
+Other possible alternative characters include U+2264 less-than or equals (&#x2264;),
+U+2264 greater-than or equals (&#x2265;),
+U+00D7 multiplication sign (&#x00D7;), 
+U+00F7 division sign (&#x00f7;),
+U+2044 fraction slash (&#x2044;) and U+2215 division slash (&#x2215;).
+The following code adds some common alternate symbols
+</p>
+<pre class="codebox">
+Jep jep = new Jep(new StandardConfigurableParser());
+jep.getOperatorTable().getUMinus().addAltSymbol("\u2212");
+jep.getOperatorTable().getSubtract().addAltSymbol("\u2212");
+jep.getOperatorTable().getMultiply().addAltSymbol("\u00d7");
+jep.getOperatorTable().getDivide().addAltSymbol("\u00f7");
+jep.reinitializeComponents();
+</pre> 
+
+
+<p>
+When printing equations with an alphabetical operator symbols like "AND" its better to include spaces before and after the operator. This can be acheived
+by setting the <code>setPrintSymbol(String)</code> of the operator.</p>
+<pre class="codebox">
+jep.getOperatorTable().getAnd().setPrintSymbol(" AND ");
+</pre> 
+
+
+  <h3>Precedence and binding</h3>
+  <p>Operators can either be binary operators (a+b), prefix unary operators (!a), 
+    suffix unary operators (i.e. like Java's x++ although no suffix operators 
+    are defined as standard) or ternary operators like Java's <code>a?b:c</code>, again not defined as standard.
+    Static fields defining flags 
+    for each of these are defined in the <a href="../javadoc/com/singularsys/jep/Operator.html">Operator</a> 
+    class, these are <code>Operator.BINARY</code>, <code>Operator.UNARY</code>, 
+    <code>Operator.PREFIX</code>, <code>Operator.SUFFIX</code>, and <code>Operator.NARY</code> for operators with 3 or more arguments. </p>
+  <p> The order in which operators are parsed depends on their <em>precedence</em>. 
+    For instance 1+2*3 is interpreted as 1+(2*3). The * operator has precedence 
+    over + (or in other words, it is &quot;more tightly bound&quot;). In Jep we 
+    use the convention that low values for precedence give a tighter binding, 
+    so the numeric value of the precedence of * is less than that of +. Precedences 
+    are always set in a relative manner as discussed below. </p>
+  <p> The parsing of operators also depends on their binding or <em>associativity</em>. 
+    This can either be left-associative (use <code>Operator.LEFT)</code>, like 
+    = where a=b=c is interpreted as a=(b=c), or right-associative (<code>Operator.RIGHT</code>), 
+    like - where a-b-c is interpreted as (a-b)-c. Left or right should be specified 
+    for all binary operators. A third flag <code>Operator.ASSOCIATIVE</code> is 
+    used to indicate associative operators, like +, this is used by print routine 
+    to determine whether to include brackets or not. </p>
+  <p>To construct an operator the constructor <code> public Operator(String name,PostfixMathCommandI 
+    pfmc,int flags) </code> is used giving the symbol used for the operator, the 
+    PostfixMathCommandI used and the sum of the flags. A second constructor <code> 
+    public Operator(String name,String symbol,PostfixMathCommandI pfmc,int flags) 
+    </code> is used when two operators share the same symbol, for example </p>
+  <pre class="codebox">
+Operator add = new Operator("+",new Add(),
+	Operator.BINARY+Operator.LEFT+Operator.ASSOCIATIVE);
+Operator sub = new Operator("-",new Subtract(),
+	Operator.BINARY+Operator.LEFT);
+Operator mul = new Operator("*",new Multiply(),
+	Operator.BINARY+Operator.LEFT+Operator.ASSOCIATIVE);
+Operator div = new Operator("/",new Add(),
+	Operator.BINARY+Operator.LEFT);
+Operator umin = new Operator("UMinus","-",new UMinus(),
+	Operator.UNARY+Operator.RIGHT+Operator.PREFIX);
+Operator equals = new Operator("=",new Assign(),
+	Operator.BINARY+Operator.RIGHT);
+</pre>
+  <p>There are further flags available, these specify other mathematical properties 
+    of the operators which are not currently used. For Ternary operators use the 
+<a href="../javadoc/com/singularsys/jep/configurableparser/TernaryOperator.html">com.singularsys.jep.configurableparser.TernaryOperator</a>.</p>
+
+  <h3>Adding operators to the operator table </h3>
+  
+  <p>Since version 3.3 a new 
+<a href="../javadoc/com/singularsys/jep/OperatorTable2.html">com.singularsys.jep.OperatorTable2</a>
+class have been introduced. A cast is needed extract the table from the main jep instance.</p>
+<pre class="codebox">OperatorTable2 table = (OperatorTable2) jep.getOperatorTable();
+</pre>
+<p>
+Each type of is given a key. For example
+OperatorTable2.BasicOperators.ADD is the key for the addition operator. Operators can be replaced using the
+<code>replaceOperator(OperatorKey key,Operator op)</code> and removed using 
+<code>removeOperator(OperatorKey key)</code>. Operators can be retrieved from the table by using
+<code>Operator getOperator(OperatorKey key)</code>
+To add a new operator a new key which implements
+<code>OperatorTable2.OperatorKey</code> must be defined and added to the table using one of</p>
+<ul>
+<li><code>Operator addOperator(OperatorKey key, Operator op)</code></li>
+<li><code>public Operator addOperator(Operator op, Operator existingOp)</code></li>
+<li><code>public Operator insertOperator(Operator op, Operator existingOp)</code></li>
+<li><code>public Operator appendOperator(Operator op, Operator existingOp)</code></li>
+</ul>
+  <p>The first adds an operator with no precedence set, the second adds an operator 
+    with the same precedence as an existing operator, the third and forth create 
+    a new precedence level which is either before (i.e. tighter) or after (i.e. 
+  looser) than the existing operator.  </p>
+  
+<pre class="codebox">
+// Set up the keys
+public enum MyOperators implements OperatorKey {FACT,PERCENT}
+
+// Build the operator
+Operator factop = new Operator("FACT","!",
+                       new Factorial(),
+                       Operator.SUFFIX+Operator.UNARY+Operator.LEFT); 
+Operator pcop = new Operator("PERCENT","%",
+                           new Percent(),
+                           Operator.SUFFIX+Operator.UNARY+Operator.LEFT);
+                           
+// Add operators with same precedence as the POSFIX operator                           
+addOperator(FACT, factop,  getOperator(POSTFIX));
+addOperator(PERCENT, pcop, getOperator(POSTFIX));
+</pre>  
+
+A simpler method just uses an abstract class for a key
+<pre class="codebox">
+OperatorTable2 table = (OperatorTable2) jep.getOperatorTable()
+Operator op = new Operator(...);
+table.addOperator(new OperatorKey(){},op);
+</pre>
+
+or just
+<pre class="codebox">
+((OperatorTable2) jep.getOperatorTable()).addOperator(new OperatorKey(){},op);
+</pre>
+
+
+<!--   
+  <p> Four methods are available for adding operators to the table:</p>
+  <pre class="codebox">
+public Operator addOperator(Operator op);
+public Operator addOperator(Operator op, Operator existingOp);
+public Operator insertOperator(Operator op, Operator existingOp);
+public Operator appendOperator(Operator op, Operator existingOp);
+</pre>
+  <p>The first adds an operator with no precedence set, the second adds an operator 
+    with the same precedence as an existing operator, the third and forth create 
+    a new precedence level which is either before (i.e. tighter) or after (i.e. 
+  looser) than the existing operator.  
+  <p>Each of these methods has a variation which allows the key code to be specified, allowing the operator to be placed in a specific place. 
+  <pre class="codebox">
+OperatorTable ot = jep.getOperatorTable();
+ot.addOperator(new Operator("~",new bitComp(),Operator.UNARY+Operator.PREFIX));
+</pre>
+  <p>To replace an existing operator, use 
+  <pre class="codebox">
+ot.replaceOperator(ot.getAnd(),new Operator("AND",new And(),new Logical(0),
+	Operator.BINARY+Operator.LEFT+Operator.ASSOCIATIVE));
+</pre>
+this will give the new operator the same precedence as the one it has replaced.
+
+  <p> An alternative way of setting operator precedence is the 
+  <a href="../javadoc/com/singularsys/jep/OperatorTable.html#setPrecedenceTable(int[][])">setPrecedenceTable</a> 
+    method which sets the precedence of all operators at once.
+     -->
+     
+  <p> Once the operators have been added, call <code>jep.reinitializeComponents()</code> 
+    to update the Jep instance with the new operators.</p>
+    
+    <p>The old operator table 
+    <a href="../javadoc/com/singularsys/jep/OperatorTable.html">OperatorTable</a>
+    is still availiable for compatability. Both tables implement the 
+    <a href="../javadoc/com/singularsys/jep/OperatorTableI.html">OperatorTableI</a> interface.</p>
+    
+<h3>Bindings and precedence for standard operators</h3>
+    <p>The following is example output of the <code>OperatorTable.toString()</code> method. </p>
+  <pre class="codebox">
+Operator: "^-1" UDivide unary, prefix, right binding, precedence -1.
+Operator: "LIST" variable number of arguments, infix, right binding, precedence -1.
+Operator: "[]" variable number of arguments, infix, right binding, precedence -1.
+Operator: "-" UMinus unary, prefix, right binding, precedence 0.
+Operator: "+" UPlus unary, prefix, right binding, precedence 0.
+Operator: "!" unary, prefix, right binding, precedence 0.
+Operator: "^" binary, infix, right binding, precedence 1.
+Operator: "*" binary, infix, left binding, associative, commutative, precedence 2.
+Operator: "/" binary, infix, left binding, precedence 2.
+Operator: "%" binary, infix, left binding, precedence 2.
+Operator: "." binary, infix, left binding, precedence 2.
+Operator: "^^" binary, infix, left binding, precedence 2.
+Operator: "+" binary, infix, left binding, associative, commutative, precedence 3.
+Operator: "-" binary, infix, left binding, precedence 3.
+Operator: ">" binary, infix, left binding, precedence 4, transitive.
+Operator: "&lt;" binary, infix, left binding, precedence 4, transitive.
+Operator: "&lt;=" binary, infix, left binding, precedence 4, reflexive, transitive.
+Operator: ">=" binary, infix, left binding, precedence 4, reflexive, transitive.
+Operator: "==" binary, infix, left binding, precedence 5, equivalence relation.
+Operator: "!=" binary, infix, left binding, precedence 5, symmetric.
+Operator: "&amp;&amp;" binary, infix, left binding, associative, commutative, precedence 6.
+Operator: "||" binary, infix, left binding, associative, commutative, precedence 7.
+Operator: "=" binary, infix, right binding, precedence 8.
+</pre><!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2>Adding operators using the standard parser</h2>
+  <p>Adding operators to the standard parser is currently only possible by modifying 
+    the Jep source code. To add an operator to the parser, several steps are needed: </p>
+  <ul>
+    <li>Create a new <i>token</i> with the descriptive name AT, say, and a string 
+      representing the operator. </li>
+    <li>Modify the grammar rules to include a rule for the new operator </li>
+    <li>Add an operator as discussed above.  </li>
+  </ul>
+
+  <h3>Editing the standard parser grammar</h3>
+  <p> The standard parser is created using the <a href="https://javacc.dev.java.net/">JavaCC</a> 
+    parser/scanner generator. JavaCC reads the<code> JccParser.jjt</code> file which is written 
+    in a special language, defining the grammar. It outputs <code>JccParser.java</code> and 
+    some other Java files which implement the parser.</p>
+  <p>You should read some of the documentation on <a href="https://javacc.dev.java.net/">JavaCC</a> 
+    and <a href="https://javacc.dev.java.net/doc/JJTree.html">JJTree</a> before 
+    attempting to modify the parser.</p>
+  <p>There is a three step process used to generate the parser. </p>
+  <ol>
+    <li>JJTree is run. This reads the file<code> JccParser.jjt</code> and creates a file <code>JccParser.jj</code>. 
+      The purpose of this step is to add code needed to handle Abstract Syntax 
+      Trees which are tree structures used represent a mathematical expression. 
+      As well as creating JccParser.jj it also creates some other Java files: 
+      Node.java which represents the basic node in the parser; <code>ASTConstant.java</code>      a node representing a constant value &quot;0&quot; or &quot;1&quot;, <code>ASTVarNode.java</code>      a node representing a variable, and <code>ASTFunNode.java</code> a node representing 
+      a function or operator. </li>
+    <li>JavaCC is run. This reads <code>JccParser.jj</code> and creates <code>JccParser.java</code> -- the 
+      actual code for implementing the Parser. <code>JccParser.java</code> is a very complicated 
+      file with nearly 2000 lines of code and is difficult to edit.</li>
+    <li>Normal Java compilation<code> JccParser.java</code> and the other classes generated 
+      by JavaCC. </li>
+  </ol>
+  <p> This process is automatically carried out when the project is built using 
+    the ANT <code>build.xml</code> file. It is not sufficient to simply recompile all the Java 
+    files.</p>
+  <p>Only the <code>JccParser.jjt</code> file should be modified, <code>JccParser.jj</code> and<code> JccParser.java</code> should not be modified as they will be overwritten during the build process. 
+    Furthermore <code>ASTConstant.java, ASTFunNode.java, ASTStart.java, ASTVarNode.java, 
+    JavaCharStream.java, JJTParserState.java, Node.java, SimpleNode.java, ParseException.java, 
+    JccParserConstants.java, JccParserTokenManager.java, JccParseTreeConstants.java, 
+    Token.java</code>, and <code>TokenMgrError.java </code>should not normally be modified as these 
+    are also automatically generated.</p>
+    
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><h2>Additional operator sets</h2>
+<p>The com.singularsys.jep.misc package contains two operators tables which contain additional operators:
+<a href="../javadoc/com/singularsys/jep/misc/bitwise/BitwiseOperatorTable.html">com.singularsys.jep.misc.bitwise.BitwiseOperatorTable</a>
+and
+<a href="../javadoc/com/singularsys/jep/misc/javaops/JavaOperatorTable.html">com.singularsys.jep.misc.javaops.JavaOperatorTable</a>.</p>
+
+  <table class="clean">
+   <tr> 
+    <th></th>
+    <th>Standard symbol</th>
+    <th>Bitwise<br />
+      OperatorTable</th>
+    <th>Java<br />
+      OperatorTable</th>
+    <th>Arguments</th>
+   </tr>
+   <tr>
+    <td>Bitwise and</td>
+    <td>&amp;</td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   <tr>
+    <td>Bitwise or</td>
+    <td>|</td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   <tr>
+    <td>Bitwise xor<sup>[1]</sup></td>
+    <td>^</td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   <tr>
+    <td>Bitwise complement</td>
+    <td>~</td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   <tr>
+    <td>Leftshift</td>
+    <td>&lt;&lt;</td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   <tr>
+    <td>Signed rightshift</td>
+    <td>>></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   <tr>
+    <td>Unsigned rightshift</td>
+    <td>>>></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+   
+   <tr>
+    <td>Pre-increment/decrement</td>
+    <td>++x, --x</td>
+    <td><div align="center"></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Double variable</td>
+   </tr>
+   <tr>
+    <td>Post-increment/decrement</td>
+    <td>x++, x--</td>
+    <td><div align="center"></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Double variable</td>
+   </tr>
+   <tr>
+    <td>Conditional</td>
+    <td>?:</td>
+    <td><div align="center"></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Double</td>
+   </tr>
+   <tr>
+    <td>Assignment</td>
+    <td>+=, -=, *=, /=, %=</td>
+    <td><div align="center"></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Double</td>
+   </tr>
+   <tr>
+    <td>Bitwise assignment</td>
+    <td>&lt;=, |=, ^=, &lt;=, >>=, >>>=</td>
+    <td><div align="center"></div></td>
+    <td><div align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check" /></div></td>
+    <td>Integer</td>
+   </tr>
+  </table>
+  
+  <p><b>Note 1:</b> the bitwise xor operator has the same symbol as normally used for power. 
+The constructors for the tables allow the symbol to be specified, the defaults are power (**) and xor (^).
+Bitwise operators and assignment convert their arguments to Integer and return arguments as <code>java.lang.Integer</code>. 
+Pre and post increment/decrement operators require a variable as argument who's value will be treated as a Double.</p>
+
+<p>
+The 
+<a href="../javadoc/com/singularsys/jep/misc/nullwrapper/NullWrappedOperatorTable.html">com.singularsys.jep.misc.nullwrapper.NullWrappedOperatorTable</a>
+adds a single operator, NullSafeEquals, <code>&lt;=&gt;</code> which can compare null values.
+</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" alt="top"  width="38" height="15"/></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ========================================================== -->
+  <div id="footer"> <a href="http://www.singularsys.com/jep/dist-bugreport.php">Report 
+    bugs / documentation errors</a><br/>
+<br/>
+    &copy; 2018 <a href="http://www.singularsys.com" target="_blank">Singular 
+    Systems</a> </div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>
