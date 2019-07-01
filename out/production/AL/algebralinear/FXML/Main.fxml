@@ -20,7 +20,7 @@
          <children>
             <AnchorPane fx:id="matrizAnchorPane" layoutX="71.0" layoutY="-50.0" prefHeight="413.0" prefWidth="706.0" style="-fx-border-color: #ff4d4d; -fx-border-radius: 4em; -fx-border-width: 4;">
                <cursor>
-                  <Cursor fx:constant="N_RESIZE" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                <children>
                   <Label fx:id="nomeLabel" layoutX="22.0" layoutY="180.0" prefHeight="37.0" prefWidth="38.0" textAlignment="CENTER">

@@ -138,6 +138,10 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Calculadora-de-Matrizes-e-Determinante-JAVAFX" vcs="Git" />
+  </component>
   <component name="libraryTable">
     <library name="jep-java-3.5-trial">
       <CLASSES>

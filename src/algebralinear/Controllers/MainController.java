@@ -5,6 +5,7 @@ import com.singularsys.jep.JepException;
 import java.io.IOException;
 
 import javafx.scene.Cursor;
+import javafx.scene.text.Text;
 import org.nfunk.jep.*;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -31,8 +32,6 @@ import javafx.stage.Stage;
  */
 public class MainController implements Initializable {
 
-    @FXML
-    private TextField nomeMatrizTextField;
     //variaveis que recebem o valor que o usuario digitar nas caixas de texto
     @FXML
     private int linha = 0;
@@ -98,6 +97,7 @@ public class MainController implements Initializable {
         matrizAnchorPane.getChildren().clear();
         linha = Integer.parseInt(linhaTextField.getText());
         coluna = Integer.parseInt(colunaTextField.getText());
+        nomeMatrizTextField.getText();
 
         if (linha > 10 || coluna > 10) {
 
@@ -110,6 +110,7 @@ public class MainController implements Initializable {
             for (int i = 1; i <= coluna; i++) {
                 for (int j = 1; j <= linha; j++) {
                     Button btn = new Button();
+                    TextField tfnome = new TextField();
 
                     btn.setOnAction((ActionEvent evento) -> {
                         TextInputDialog dialog = new TextInputDialog();
@@ -119,7 +120,9 @@ public class MainController implements Initializable {
                         btn.setText(result.get());
 
                     });
-                    
+
+                    tfnome.setText(String.valueOf(nomeMatrizTextField));
+                    tfnome.setLayoutX(j * 30);
                     btn.setPrefWidth(55);
                     btn.setPrefHeight(29);
                     btn.setCursor(Cursor.HAND);
