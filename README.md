@@ -5,3 +5,4 @@ Este projeto tem como objetivo calcular e gerar uma matriz juntamente com seu de
 Bibilhotecas ultilizadas: 
 * JEP 
 * JPHOENIX
+* JAVAFX08
