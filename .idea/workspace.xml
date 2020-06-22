@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Atualizaão de bibilhotecas e Classes">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jep_java_3_5_trial.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jep_jep_2_24.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Calculadora Matrizes.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jep-2.24.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jep-java-3.5-trial.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jfoenix-8.0.8.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jfoenix-9.0.9-javadoc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jfoenix-9.0.9-sources.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jfoenix-9.0.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Calculadora Matrizes/AlgebraLinear.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Calculadora Matrizes/Controllers/MainController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Calculadora Matrizes/FXML/Main.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Calculadora Matrizes/algebralinear/helper/Matriz.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AlgebraLinear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controllers/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FXML/Main.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helper/Matriz.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,6 +80,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1dg5fI7kKE0omxGQp8Fh7bEubgb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
@@ -217,7 +237,16 @@
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1592834000440" duration="1769000" />
+      <workItem from="1592835875482" duration="330000" />
     </task>
+    <task id="LOCAL-00001" summary="Atualizaão de bibilhotecas e Classes">
+      <created>1592836141097</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592836141097</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,8 +255,14 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <MESSAGE value="Atualizaão de bibilhotecas e Classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Atualizaão de bibilhotecas e Classes" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="180" y="0" key="CommitChangelistDialog2" timestamp="1592836230810">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="180" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1592836230810" />
     <state x="437" y="100" key="DetectedRootsChooserDialog" timestamp="1592834740675">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -256,6 +291,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="163" y="0" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1592835214095" />
+    <state x="275" y="117" key="Vcs.Push.Dialog.v2" timestamp="1592836238931">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="275" y="117" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1592836238931" />
     <state x="387" y="278" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1592834630768">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

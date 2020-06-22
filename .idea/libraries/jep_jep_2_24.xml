@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jep:jep:2.24" type="repository">
+    <properties maven-id="jep:jep:2.24" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jep-2.24.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

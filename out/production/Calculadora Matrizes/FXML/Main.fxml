@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="fundo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="1076.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainController">
+   <children>
+      <Pane layoutY="25.0" prefHeight="455.0" prefWidth="339.0" style="-fx-background-color: #C0C0C0;" />
+      <Pane fx:id="matrizPane" layoutX="280.0" layoutY="90.0" prefHeight="369.0" prefWidth="732.0">
+         <children>
+            <AnchorPane fx:id="matrizAnchorPane" layoutX="71.0" layoutY="-50.0" prefHeight="413.0" prefWidth="706.0" style="-fx-border-color: #C0C0C0; -fx-border-radius: 4em; -fx-border-width: 4;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <children>
+                  <Label fx:id="nomeLabel" layoutX="22.0" layoutY="180.0" prefHeight="37.0" prefWidth="38.0" textAlignment="CENTER">
+                     <font>
+                        <Font name="Arial Black" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text fill="#9a2121" layoutX="171.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Defina o nome e o&#10; tamanho de sua matriz" textAlignment="CENTER">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </Pane>
+      <MenuBar layoutX="-7.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="1083.0" style="-fx-background-color: #C0C0C0;">
+        <menus>
+          <Menu mnemonicParsing="false" text="Criar">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#okButton" text="Gerar Matriz" />
+              <MenuItem mnemonicParsing="false" onAction="#determinante" text="Determinante" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Editar">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#okButton" text="Limpar Matriz" />
+                  <MenuItem mnemonicParsing="false" onAction="#limparDeterminante" text="Limpar Determinante" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Pane layoutX="21.0" layoutY="213.0" prefHeight="183.0" prefWidth="302.0" style="-fx-border-color: #c0c0c0; -fx-border-radius: 1em;">
+         <children>
+            <Label layoutX="183.0" layoutY="14.0" prefHeight="22.0" prefWidth="133.0" text="Lei de Formação" textFill="WHITE" />
+            <Label layoutX="58.0" layoutY="17.0" text="Condição" textFill="WHITE" />
+            <JFXTextField fx:id="cond_A_1TextField" alignment="CENTER" layoutX="11.0" layoutY="45.0" prefHeight="25.0" prefWidth="50.0" promptText="L" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="operador_1TextField" alignment="CENTER" layoutX="68.0" layoutY="45.0" prefHeight="25.0" prefWidth="36.0" promptText="&gt;" unFocusColor="#e1e1e1">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="cond_B_1TextField" alignment="CENTER" layoutX="111.0" layoutY="45.0" prefHeight="25.0" prefWidth="50.0" promptText="C" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="lei_1TextField" alignment="CENTER" layoutX="168.0" layoutY="45.0" prefHeight="25.0" prefWidth="118.0" promptText="1L + 2C" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="cond_A_2TextField" alignment="CENTER" layoutX="11.0" layoutY="77.0" prefHeight="25.0" prefWidth="50.0" promptText="L" unFocusColor="#f8f8f8">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="operador_2TextField" alignment="CENTER" layoutX="68.0" layoutY="77.0" prefHeight="25.0" prefWidth="36.0" promptText="=" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="cond_B_2TextField" alignment="CENTER" layoutX="111.0" layoutY="77.0" prefHeight="25.0" prefWidth="50.0" promptText="C" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="lei_2TextField" alignment="CENTER" layoutX="168.0" layoutY="78.0" prefHeight="25.0" prefWidth="118.0" promptText="2L + 4C" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="cond_A_3TextField" alignment="CENTER" layoutX="11.0" layoutY="109.0" prefHeight="25.0" prefWidth="50.0" promptText="L" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="operador_3TextField" alignment="CENTER" layoutX="68.0" layoutY="109.0" prefHeight="25.0" prefWidth="36.0" promptText="&lt;" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="cond_B_3TextField" alignment="CENTER" layoutX="111.0" layoutY="109.0" prefHeight="25.0" prefWidth="50.0" promptText="C" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="lei_3TextField" alignment="CENTER" layoutX="168.0" layoutY="110.0" prefHeight="25.0" prefWidth="118.0" promptText="3L + 6C" unFocusColor="WHITE">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></JFXTextField>
+            <JFXButton fx:id="preencheMatrizbtn" layoutX="147.0" layoutY="148.0" onAction="#preencherAutomaticamene" prefHeight="25.0" prefWidth="138.0" ripplerFill="#613131" style="-fx-background-color: #ff1a1a; -fx-border-color: #c0c0c0;" text="Preencher Matriz" textFill="WHITE" />
+         </children>
+      </Pane>
+      <AnchorPane layoutX="21.0" layoutY="403.0" prefHeight="47.0" prefWidth="302.0" style="-fx-border-radius: 1em; -fx-border-color: #c0c0c0;">
+         <children>
+            <JFXButton fx:id="determinanteButton" layoutX="148.0" layoutY="11.0" mnemonicParsing="false" onAction="#determinante" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #ff1a1a; -fx-border-color: #c0c0c0;" text="Calcular determinante" textFill="WHITE" />
+            <TextField fx:id="determinanteTextField" alignment="CENTER" layoutX="14.0" layoutY="11.0" prefHeight="25.0" prefWidth="118.0" promptText="Valor do Determinante" style="-fx-background-color: #ff4d4d; -fx-border-color: #c0c0c0;">
+               <font>
+                  <Font name="Arial" size="9.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+      <Pane layoutX="21.0" layoutY="40.0" prefHeight="156.0" prefWidth="302.0" style="-fx-border-color: #c0c0c0; -fx-border-radius: 1em;">
+         <children>
+            <Label layoutX="106.0" layoutY="102.0" text="X" textFill="WHITE">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="82.0" layoutY="14.0" text="Informações da Matriz" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="nomeMatrizTextField" alignment="CENTER" focusColor="#f50000" labelFloat="true" layoutX="24.0" layoutY="53.0" prefHeight="25.0" prefWidth="256.0" promptText="Nome da Matriz" unFocusColor="#ffe5e5" />
+            <JFXTextField fx:id="linhaTextField" alignment="CENTER" focusColor="RED" labelFloat="true" layoutX="24.0" layoutY="99.0" prefHeight="25.0" prefWidth="70.0" promptText="Linhas" unFocusColor="WHITE" />
+            <JFXTextField fx:id="colunaTextField" alignment="CENTER" focusColor="RED" labelFloat="true" layoutX="126.0" layoutY="100.0" prefHeight="25.0" prefWidth="70.0" promptText="Colunas" unFocusColor="WHITE" />
+            <JFXButton fx:id="CriarMatriz" layoutX="213.0" layoutY="100.0" onAction="#okButton" prefHeight="25.0" prefWidth="70.0" ripplerFill="#613131" style="-fx-background-color: #ff1a1a; -fx-border-color: #c0c0c0;" text="Criar" textFill="WHITE" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

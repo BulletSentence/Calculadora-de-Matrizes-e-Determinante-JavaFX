@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jep-java-3.5-trial">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jep-java-3.5-trial.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
